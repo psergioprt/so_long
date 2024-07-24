@@ -30,16 +30,18 @@ static void	map_read(int fd, int *line_count, int *max_line_length)
 	}
 }
 
-int	main(void)
+int	main(int argc, char *argv[])
 {
 	int		fd;
 	int		line_count;
 	int		max_line_length;
 	char	**map;
 
+	if (argc != 2)
+		return (1);
 	line_count = 0;
 	max_line_length = 0;
-	fd = open(MAP_FILE, O_RDONLY);
+	fd = open(argv[1], O_RDONLY);
 	if (fd == -1)
 		return (1);
 	map_read(fd, &line_count, &max_line_length);
