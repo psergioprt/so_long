@@ -22,7 +22,7 @@ char	*ft_fill_static_str(int fd, char *static_str)
 	if (!buff)
 		return (NULL);
 	rd_bytes = 1;
-	while (!ft_strchr(static_str, '\n') && rd_bytes != 0)
+	while (!ft_strchr_gnl(static_str, '\n') && rd_bytes != 0)
 	{
 		rd_bytes = read(fd, buff, BUFFER_SIZE);
 		if (rd_bytes == -1)
@@ -32,7 +32,7 @@ char	*ft_fill_static_str(int fd, char *static_str)
 			return (NULL);
 		}
 		buff[rd_bytes] = '\0';
-		static_str = ft_strjoin(static_str, buff);
+		static_str = ft_strjoin_gnl(static_str, buff);
 	}
 	free(buff);
 	return (static_str);

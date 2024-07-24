@@ -1,0 +1,227 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pauldos- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/20 15:04:40 by pauldos-          #+#    #+#             */
+/*   Updated: 2023/11/20 15:25:33 by pauldos-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "ft_printf.h"
+
+int	ft_count_digits(int n)
+{
+	int count = 0;
+	if (n == 0)
+		return (1);
+	if (n < 0)
+	{
+		count++;
+		n = -n;
+	}
+	while (n > 0)
+	{
+		count++;
+		n /= 10;
+	}
+	return (count);
+}
+
+void ft_putchar_new_fd(char c, int fd) {
+    write(fd, &c, 1);
+}
+
+void ft_putnbr_new_fd(int n, int fd) {
+    if (n == -2147483648) {
+        ft_putchar_new_fd('-', fd);
+        ft_putnbr_new_fd(214748364, fd);
+        ft_putnbr_new_fd(8, fd);
+    } else if (n < 0) {
+        ft_putchar_new_fd('-', fd);
+        ft_putnbr_new_fd(-n, fd);
+    } else if (n >= 10) {
+        ft_putnbr_new_fd(n / 10, fd);
+        ft_putnbr_new_fd(n % 10, fd);
+    } else {
+        ft_putchar_new_fd(n + '0', fd);
+    }
+}
+
+static int	ft_printf_format(const char *format, int i, va_list args)
+{
+	if (format[i + 1] == '%')
+		return (ft_printf_putchar(format[i + 1]));
+	else if (format[i + 1] == 'c')
+		return (ft_printf_putchar(va_arg(args, int)));
+	else if (format[i + 1] == 's')
+	{
+		return (ft_printf_putstr(va_arg(args, char *)));
+	}
+	else if (format[i + 1] == 'i' || format[i + 1] == 'd')
+	{
+		int	num = va_arg(args, int);
+		int	count = ft_count_digits(num);
+		ft_putnbr_new_fd(num, 1);
+		return (count);
+	}
+	else if (format[i + 1] == 'u')
+		return (ft_print_int_u(va_arg(args, unsigned int)));
+	else if (format[i + 1] == 'x' || format[i + 1] == 'X')
+	{
+		if (format[i + 1] == 'X')
+			return (ft_p_hex(va_arg(args, unsigned int), "0123456789ABCDEF"));
+		else
+			return (ft_p_hex(va_arg(args, unsigned int), "0123456789abcdef"));
+	}
+	else if (format[i + 1] == 'p')
+		return (ft_print_ptr(va_arg(args, void *), "0123456789abcdef"));
+	return (0);
+}
+
+int	ft_printf(const char *format, ...)
+{
+	int		char_len;
+	int		i;
+	va_list	args;
+
+	i = 0;
+	char_len = 0;
+	va_start(args, format);
+	while (format[i])
+	{
+		if (format[i] == '%')
+		{
+			if (ft_printf_strchr("cspdiuxX%", format[i + 1]))
+			{
+				/*int arg = va_arg(args, int);
+				if (format[i + 1] == 'd' || format[i + 1] == 'i')
+				{
+					char_len += ft_count_digits(arg);
+					ft_print_int(arg);
+				}
+				else
+					char_len += ft_printf_format(format, i, args);*/
+				char_len += ft_printf_format(format, i, args);
+				i += 2;
+			}
+			else
+			{
+				ft_putchar_new_fd(format[i], 1);
+				char_len++;
+				i++;
+			}
+		}
+		else
+		{
+			ft_putchar_new_fd(format[i], 1);
+			char_len++;
+			i++;
+		}
+	}
+	va_end(args);
+	return (char_len);
+}
+
+/*static int	ft_printf_format(const char *format, int i, va_list args)
+{
+	if (format[i + 1] == '%')
+		return (ft_printf_putchar(format[i + 1]));
+	else if (format[i + 1] == 'c')
+		return (ft_printf_putchar(va_arg(args, int)));
+	else if (format[i + 1] == 's')
+		return (ft_printf_putstr(va_arg(args, char *)));
+	else if (format[i + 1] == 'i' || format[i + 1] == 'd')
+		return (ft_print_int(va_arg(args, int)));
+	else if (format[i + 1] == 'u')
+		return (ft_print_int_u(va_arg(args, unsigned int)));
+	else if (format[i + 1] == 'x' || format[i + 1] == 'X')
+	{
+		if (format[i + 1] == 'X')
+			return (ft_p_hex(va_arg(args, unsigned int), "0123456789ABCDEF"));
+		else
+			return (ft_p_hex(va_arg(args, unsigned int), "0123456789abcdef"));
+	}
+	else if (format[i + 1] == 'p')
+		return (ft_print_ptr(va_arg(args, void *), "0123456789abcdef"));
+	return (0);
+}
+
+int	ft_printf(const char *format, ...)
+{
+	int		char_len;
+	int		i;
+	va_list	args;
+
+	i = 0;
+	char_len = 0;
+	va_start(args, format);
+	while (format[i])
+	{
+		if (format[i] == '%')
+		{
+			if (ft_printf_strchr("cspdiuxX%", format[i + 1]))
+			{
+				char_len += ft_printf_format(format, i, args);
+				i++;
+			}
+		}
+		else
+			char_len += ft_printf_putchar(format[i]);
+		i++;
+	}
+	va_end(args);
+	return (char_len);
+}*/
+
+/*#include "ft_printf.h"
+
+int ft_printf(const char *format, ...)
+{
+    va_list args;
+    va_start(args, format);
+    const char *ptr = format;
+    while (*ptr)
+    {
+        if (*ptr == '%' && *(ptr + 1) == 'd')
+        {
+            int num = va_arg(args, int);
+	    ft_print_int(num);
+            ptr += 2;
+        }
+        else
+        {
+            write(1, ptr, 1);
+            ptr++;
+        }
+    }
+    va_end(args);
+    return 0; // Simplified return
+}*/
+
+
+/*
+int	main(void)
+{
+	char			*str;
+	char			c;
+	int				n;
+	unsigned int	n2;
+	void	*p;
+
+	str = "is Luka";
+	c = 'd';
+	n = -2147483648;
+	n2 = -123;
+	p = (void *)0;
+
+	ft_printf("_my: %% (String) (s) My name %s! | Char (c): %c\n", str, c);
+	printf("sys: %% (String) (s) My name %s! | Char (c): %c\n", str, c);
+	ft_printf("_my: Number (d) %d | (i): %i | (u): %u\n", n, n, n2);
+	printf("Sys: Number (d) %d | (i): %i | (u): %u\n", n, n, n2);
+	ft_printf("_my: Pointer (p): %p | Hex(x): %x (X): %X\n", p, n2, n2);
+	printf("Sys: Pointer (p): %p | Hex(x): %x (X): %X\n", p, n2, n2);
+	return (0);
+}*/

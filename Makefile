@@ -1,10 +1,8 @@
 # Variable definition
 CC = gcc
-CFLAGS = -g -Wall -Wextra -Werror -I$(INCDIR) -Iutil_funcs/Libft  -Iutil_funcs/ft_printf -Iutil_funcs/get_next_line
 
    # Include MLX and X11 header files. Look at the correct folder
    # whether the system is Linux or MacOS
-
 UNAME := $(shell uname)
 
 ifeq ($(UNAME), Linux)
@@ -16,6 +14,8 @@ else
 	MLX_FLAGS = -Lmlx -lmlx -L/usr/X11/lib -lXext -lX11 -framework OpenGL -framework Appkit
 	MLX_LIB = libmlx.a
 endif
+
+CFLAGS = -g -Wall -Wextra -Werror -I$(INCDIR) -Iutil_funcs/Libft  -Iutil_funcs/ft_printf/include -Iutil_funcs/get_next_line $(INC_X11_MLX)
 
 NAME = so_long
 SRCDIR = src
@@ -52,7 +52,7 @@ SRC = 	$(wildcard $(SRCDIR)/*.c)
 # defines object files corresponding to each source file
 OBJS = $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRC))
 
-# Main target of the Makefile (push_swap), depends on Objs and Libft
+# Main target of the Makefile (so_long), depends on Objs and Libft
 # compiles the source files, links them to Libft and ft_printf Library
 # and produces push_swap executable
 $(NAME): $(OBJS) $(LIBFT) $(PRINTF) $(GNL) $(MLX)
@@ -117,6 +117,4 @@ re:	fclean all
 
 # Clean is a phony target, which means it doesn't output a file
 # with the same name "clean".
-.PHONY: clean fclean deploy re all
-deploy:
-
+.PHONY: clean fclean re all

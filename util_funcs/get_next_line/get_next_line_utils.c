@@ -12,7 +12,7 @@
 
 #include "get_next_line.h"
 
-size_t	ft_strlen(const char *string)
+size_t	ft_strlen_gnl(const char *string)
 {
 	size_t	count;
 
@@ -24,7 +24,7 @@ size_t	ft_strlen(const char *string)
 	return (count);
 }
 
-char	*ft_strchr(const char *str, int c)
+char	*ft_strchr_gnl(const char *str, int c)
 {
 	unsigned int	i;
 
@@ -32,7 +32,7 @@ char	*ft_strchr(const char *str, int c)
 	if (!str)
 		return (0);
 	if (c == '\0')
-		return ((char *)&str[ft_strlen(str)]);
+		return ((char *)&str[ft_strlen_gnl(str)]);
 	while (str[i])
 	{
 		if (str[i] == (char)c)
@@ -42,9 +42,9 @@ char	*ft_strchr(const char *str, int c)
 	return (0);
 }
 
-char	*ft_strjoin(char *s1, char *s2)
+char	*ft_strjoin_gnl(char *s1, char *s2)
 {
-	char				*newstring;
+	char				*newstr;
 	int					i;
 	int					j;
 
@@ -55,19 +55,19 @@ char	*ft_strjoin(char *s1, char *s2)
 	}
 	if (!s1 || !s2)
 		return (NULL);
-	newstring = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
-	if (newstring == NULL)
+	newstr = malloc(sizeof(char) * (ft_strlen_gnl(s1) + ft_strlen_gnl(s2) + 1));
+	if (newstr == NULL)
 		return (NULL);
 	i = -1;
 	j = 0;
 	if (s1)
 		while (s1[++i] != '\0')
-			newstring[i] = s1[i];
+			newstr[i] = s1[i];
 	while (s2[j] != '\0')
-		newstring[i++] = s2[j++];
-	newstring[ft_strlen(s1) + ft_strlen(s2)] = '\0';
+		newstr[i++] = s2[j++];
+	newstr[ft_strlen_gnl(s1) + ft_strlen_gnl(s2)] = '\0';
 	free(s1);
-	return (newstring);
+	return (newstr);
 }
 
 char	*ft_get_line(char *str)
@@ -112,7 +112,7 @@ char	*ft_update_static_str(char *static_str)
 		free(static_str);
 		return (NULL);
 	}
-	newstr = (char *)malloc(sizeof(char) * (ft_strlen(static_str) - i + 1));
+	newstr = (char *)malloc(sizeof(char) * (ft_strlen_gnl(static_str) - i + 1));
 	if (!newstr)
 		return (NULL);
 	i++;

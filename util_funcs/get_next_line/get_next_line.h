@@ -24,9 +24,9 @@
 char	*get_next_line(int fd);
 char	*ft_fill_static_str(int fd, char *static_str);
 //utils file
-size_t	ft_strlen(const char *string);
-char	*ft_strchr(const char *s, int c);
-char	*ft_strjoin(char *s1, char *s2);
+size_t	ft_strlen_gnl(const char *string);
+char	*ft_strchr_gnl(const char *s, int c);
+char	*ft_strjoin_gnl(char *s1, char *s2);
 char	*ft_get_line(char *str);
 char	*ft_update_static_str(char *static_str);
 #endif
