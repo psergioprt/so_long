@@ -34,6 +34,9 @@ void	init_game(t_game *game)
 	game->line_count = 0;
 	game->max_line_length = 0;
 	game->map = NULL;
+	game->player = 0;
+	game->consumable = 0;
+	game->exit_map = 0;
 }
 
 int	main(int argc, char *argv[])
@@ -53,6 +56,7 @@ int	main(int argc, char *argv[])
 				game.max_line_length) != 0)
 		return (1);
 	add_print_lines(&game.map, fd);
+	validate_map(game.map, game.line_count);
 	mem_free(&game.map, game.line_count);
 	return (0);
 }
