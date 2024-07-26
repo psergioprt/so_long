@@ -80,6 +80,33 @@ bool	check_map_elements(char **map, int line_count)
 	return (true);
 }
 
+bool	check_wall(char **map, int line_count)
+{
+	int	i;
+	int	j;
+	int	line_length;
+
+	i = 0;
+	while (i < line_count)
+	{
+		line_length = ft_strlen(map[i]) - 1;
+		j = 0;
+		while (j < line_length)
+		{
+			if (i == 0 && map[i][j] != '1')
+				return (false);
+			if ((i > 0 && i < (line_count - 1) && (j == 0 || \
+							j == line_length - 1) && map[i][j] != '1'))
+				return (false);
+			if ((i == line_count - 1) && map[i][j] != '1')
+				return (false);
+			j++;
+		}
+		i++;
+	}
+	return (true);
+}
+
 bool	validate_map(char **map, int line_count)
 {
 	if (!(check_rectangle(map, line_count)))
@@ -95,6 +122,11 @@ bool	validate_map(char **map, int line_count)
 	if (!(check_map_elements(map, line_count)))
 	{
 		ft_printf("Map hasn't the required element number\n");
+		return (false);
+	}
+	if (!(check_wall(map, line_count)))
+	{
+		ft_printf("Wall is not correct\n");
 		return (false);
 	}
 	ft_printf("Map is OK\n");
