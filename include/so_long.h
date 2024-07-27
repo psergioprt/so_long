@@ -21,6 +21,9 @@
 # include "../util_funcs/ft_printf/ft_printf.h"
 # include "../util_funcs/Libft/libft.h"
 # include "../util_funcs/get_next_line/get_next_line.h"
+# include "mlx.h"
+
+# define TILE_SIZE 32
 
 typedef struct s_game
 {
@@ -29,6 +32,15 @@ typedef struct s_game
 	int		player;
 	int		consumable;
 	int		exit_map;
+	void	*img_player;
+	void	*img_wall;
+	void	*img_exit;
+	void	*img_road;
+	void	*img_collectible;
+	int	img_width;
+	int	img_height;
+	void	*mlx;
+	void	*window;
 	char	**map;
 }	t_game;
 
@@ -38,5 +50,7 @@ int		map_mem_allocate(char ***map, int fd, int line_ct, int max_line_lth);
 bool	check_rectangle(char **map, int line_count);
 bool	validate_map(char **map, int line_count);
 void	init_game(t_game *game);
+void	init_mlx(t_game *game);
+void	cleanup_mlx(t_game *game);
 
 #endif
