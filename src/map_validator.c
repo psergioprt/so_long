@@ -55,27 +55,27 @@ bool	check_map_elements(char **map, int line_count)
 {
 	int		i;
 	int		j;
-	int		row_len;
+	int		line_length;
 	t_game	items;
 
 	i = 0;
 	init_game(&items);
 	while (i < line_count)
 	{
-		row_len = ft_strlen(map[i]) - 1;
+		line_length = ft_strlen(map[i]) - 1;
 		j = 0;
-		while (j < row_len)
+		while (j < line_length)
 		{
 			if (map[i][j] == 'P')
 				items.player++;
 			if (map[i][j] == 'C')
-				items.consumable++;
+				items.item++;
 			if (map[i][j++] == 'E')
 				items.exit_map++;
 		}
 		i++;
 	}
-	if (items.player != 1 || items.consumable < 1 || items.exit_map != 1)
+	if (items.player != 1 || items.item < 1 || items.exit_map != 1)
 		return (false);
 	return (true);
 }

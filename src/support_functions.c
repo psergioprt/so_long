@@ -46,21 +46,21 @@ void	mem_free(char ***map, int line_count)
 	free(*map);
 }
 
-int	map_mem_allocate(char ***map, int fd, int line_ct, int max_line_lth)
+int	map_mem_allocate(char ***map, int fd, int line_count, int max_line_length)
 {
 	int	i;
 	int	j;
 
-	*map = malloc(sizeof(char *) * line_ct);
+	*map = malloc(sizeof(char *) * line_count);
 	if (!(*map))
 	{
 		close (fd);
 		return (1);
 	}
 	i = 0;
-	while (i < line_ct)
+	while (i < line_count)
 	{
-		(*map)[i] = malloc(sizeof(char) * (max_line_lth + 1));
+		(*map)[i] = malloc(sizeof(char) * (max_line_length + 2));
 		if (!((*map)[i]))
 		{
 			j = 0;
@@ -70,7 +70,7 @@ int	map_mem_allocate(char ***map, int fd, int line_ct, int max_line_lth)
 			close (fd);
 			return (1);
 		}
-		i++;
+		(*map)[i++][max_line_length] = '\0';
 	}
 	return (0);
 }

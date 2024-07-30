@@ -30,18 +30,19 @@ typedef struct s_game
 	int		line_count;
 	int		max_line_length;
 	int		player;
-	int		consumable;
+	int		item;
 	int		exit_map;
 	void	*img_player;
 	void	*img_wall;
 	void	*img_exit;
 	void	*img_road;
-	void	*img_collectible;
+	void	*img_item;
 	int	img_width;
 	int	img_height;
 	void	*mlx;
 	void	*window;
 	char	**map;
+	int	should_exit;
 }	t_game;
 
 void	add_print_lines(char ***map, int fd);
@@ -52,5 +53,10 @@ bool	validate_map(char **map, int line_count);
 void	init_game(t_game *game);
 void	init_mlx(t_game *game);
 void	cleanup_mlx(t_game *game);
+int		loop_hook(t_game *game);
+int		key_press(int keycode, t_game *game);
+void	init_mlx(t_game *game);
+void	load_image(t_game *game);
+
 
 #endif
