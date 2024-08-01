@@ -49,6 +49,8 @@ void	init_game(t_game *game)
 	game->img_width = 0;
 	game->img_height = 0;
 	game->should_exit = 0;
+	game->player_x = 0;
+	game->player_y = 0;
 }
 
 void	start_mlx_functions(t_game *game)
@@ -83,6 +85,7 @@ int	main(int argc, char *argv[])
 		mem_free(&game.map, game.line_count);
 		return (1);
 	}
+	validate_reachability(&game);
 	start_mlx_functions(&game);
 	return (0);
 }

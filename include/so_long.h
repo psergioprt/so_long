@@ -43,7 +43,18 @@ typedef struct s_game
 	void	*window;
 	char	**map;
 	int	should_exit;
+	int		player_x;
+	int		player_y;
+
 }	t_game;
+
+typedef struct s_flood_fill_vars
+{
+	char	**map;
+	int		rows;
+	int		cols;
+	int		**visited;
+}t_flood_fill_vars;
 
 void	add_print_lines(char ***map, int fd);
 void	mem_free(char ***map, int line_count);
@@ -57,6 +68,7 @@ int		loop_hook(t_game *game);
 int		key_press(int keycode, t_game *game);
 void	init_mlx(t_game *game);
 void	load_image(t_game *game);
-
+void	validate_reachability(t_game *game);
+void	free_flood_mem(t_game *game, t_flood_fill_vars *f, int *flag);
 
 #endif
