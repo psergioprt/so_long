@@ -53,6 +53,7 @@ void	init_game(t_game *game)
 	game->player_y = 0;
 	game->total_items = 0;
 	game->items_collected = 0;
+	game->move_count = 0;
 }
 
 void	start_mlx_functions(t_game *game)

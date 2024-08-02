@@ -47,6 +47,7 @@ typedef struct s_game
 	int		player_y;
 	int		total_items;
 	int		items_collected;
+	int		move_count;
 }	t_game;
 
 typedef struct s_flood_fill_vars
@@ -56,6 +57,13 @@ typedef struct s_flood_fill_vars
 	int		cols;
 	int		**visited;
 }t_flood_fill_vars;
+
+typedef struct s_draw_shape
+{
+	int	width;
+	int	height;
+	int	color;
+}t_draw_shape;
 
 void	add_print_lines(char ***map, int fd);
 void	mem_free(char ***map, int line_count);

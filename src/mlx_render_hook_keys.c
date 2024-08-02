@@ -12,12 +12,70 @@
 
 #include "so_long.h"
 
+static void	render_game(t_game *game);
+
+void	draw_rectangle(t_game *game, t_draw_shape rectangle, int x, int y)
+{
+	int	i;
+	int	j;
+	
+	i = x;
+	while (i < x + rectangle.width)
+	{
+		j = y;
+		while (j < y + rectangle.height)
+		{
+			mlx_pixel_put(game->mlx, game->window, i, j, rectangle.color);
+			j++;
+		}
+		i++;
+	}
+}
+
+void	display_move_count(t_game *game)
+{
+	t_draw_shape rectangle;
+	char	*move_str;
+	int	text_color;
+	int	x;
+	int	y;
+
+	move_str = ft_itoa(game->move_count);
+	if (!move_str)
+	{
+		fprintf(stderr, "Failed to allocate memory for move string\n");
+		return;
+	}
+	text_color = 0xFFFFFF;
+	rectangle.color = 0x000000;
+	x = 30;
+	y = 20;
+	rectangle.width = 80;
+	rectangle.height = 20;
+	draw_rectangle(game, rectangle, x - 5, y - 15);
+	mlx_string_put(game->mlx, game->window, x, y, text_color, "Moves: ");
+	mlx_string_put(game->mlx, game->window, x + 40, y, text_color, move_str);
+	free(move_str);
+}
+
+int loop_hook(t_game *game)
+{
+	if (game->should_exit)
+	{
+		cleanup_mlx(game);
+		mem_free(&game->map, game->line_count);
+		exit(0);
+	}
+	mlx_clear_window(game->mlx, game->window);
+	render_game(game);
+	display_move_count(game);
+	return (0);
+}
+
 int	key_press(int keycode, t_game *game)
 {
 	int	new_x = game->player_x;
 	int	new_y = game->player_y;
-	int	previous_x = game->player_x;
-	int	previous_y = game->player_y;
 
 	if (keycode == 65307)
 	{
@@ -31,7 +89,6 @@ int	key_press(int keycode, t_game *game)
 	}
 	else if (keycode == 65363 || keycode == 100) //right
 	{
-		printf("Player: %c -> map[%d][%d]\n", game->map[new_y][new_x], new_y, new_x);
 		if (new_x < game->max_line_length && game->map[new_y][new_x + 1] != '1')
 			new_x += 1;
 	}
@@ -45,34 +102,40 @@ int	key_press(int keycode, t_game *game)
 		if (new_x > 0 && game->map[new_y][new_x - 1] != '1')
 			new_x += -1;
 	}
-
-	game->player_x = new_x;
-	game->player_y = new_y;
-	if (game->map[previous_y][previous_x] == 'P')
-		game->map[previous_y][previous_x] = '0';
-	if (game->map[new_y][new_x] == 'C')
+	char	curElement = game->map[new_y][new_x];
+	char	prevElement = game->map[game->player_y][game->player_x];
+	if (curElement == 'C')
 	{
 		game->items_collected += 1;
 		printf("You now have %d/%d items\n", game->items_collected, game->total_items);
 	}
-	if (game->map[new_y][new_x] == 'E')
+	if (curElement == 'E')
 	{
-		game->map[new_y][new_x] = 'P';
 		if (game->items_collected == game->total_items)
 		{
-			ft_printf("Well done, you have completed the map\n");
+			printf("Well done, you have completed the map\n");
 			game->should_exit = 1;
-		}
-		else
-		{
-			game->map[previous_y][previous_x] = 'E';
-			ft_printf("So far you have only collected %d items\n", game->items_collected);
 			return (0);
 		}
+		else
+			printf("You still need to collect all items. Collected %d so far.\n", game->items_collected);
 	}
-	game->map[new_y][new_x] = 'P';
-	previous_x = new_x;
-	previous_y = new_y;
+	if (new_x != game->player_x || new_y != game->player_y)
+	{
+		game->move_count++;
+		ft_printf("Move count %d\n", game->move_count);
+		game->map[new_y][new_x] = 'P';
+		if (prevElement == 'E')
+			game->map[game->player_y][game->player_x] = 'E';
+		else
+			game->map[game->player_y][game->player_x] = '0';
+	
+	game->player_x = new_x;
+	game->player_y = new_y;
+	}
+	printf("Player moved to [%d, %d]\n", new_y, new_x);
+	// Request a redraw
+	mlx_loop_hook(game->mlx, loop_hook, game);
 	return (0);
 }
 
@@ -114,22 +177,4 @@ static void	render_game(t_game *game)
 		}
 		y++;
 	}
-}
-
-static void	update_and_render(t_game *game)
-{
-	mlx_clear_window(game->mlx, game->window);
-	render_game(game);
-}
-
-int	loop_hook(t_game *game)
-{
-	if (game->should_exit)
-	{
-		cleanup_mlx(game);
-		mem_free(&game->map, game->line_count);
-		exit(0);
-	}
-	update_and_render(game);
-	return (0);
 }
