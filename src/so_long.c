@@ -51,6 +51,8 @@ void	init_game(t_game *game)
 	game->should_exit = 0;
 	game->player_x = 0;
 	game->player_y = 0;
+	game->total_items = 0;
+	game->items_collected = 0;
 }
 
 void	start_mlx_functions(t_game *game)
@@ -74,17 +76,19 @@ int	main(int argc, char *argv[])
 	if (fd == -1)
 		return (1);
 	map_read(fd, &game.line_count, &game.max_line_length);
+
 	lseek(fd, 0, SEEK_SET);
 	if (map_mem_allocate(&game.map, fd, game.line_count, \
 				game.max_line_length) != 0)
 		return (1);
 	add_print_lines(&game.map, fd);
 	close (fd);
-	if (!validate_map(game.map, game.line_count))
+	if (!validate_map(game.map, game.line_count, &game)) //added &game
 	{
 		mem_free(&game.map, game.line_count);
 		return (1);
 	}
+	printf("Main after validate_map, total items value is %d\n", game.total_items);
 	validate_reachability(&game);
 	start_mlx_functions(&game);
 	return (0);

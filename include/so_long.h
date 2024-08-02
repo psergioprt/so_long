@@ -45,7 +45,8 @@ typedef struct s_game
 	int	should_exit;
 	int		player_x;
 	int		player_y;
-
+	int		total_items;
+	int		items_collected;
 }	t_game;
 
 typedef struct s_flood_fill_vars
@@ -60,7 +61,7 @@ void	add_print_lines(char ***map, int fd);
 void	mem_free(char ***map, int line_count);
 int		map_mem_allocate(char ***map, int fd, int line_ct, int max_line_lth);
 bool	check_rectangle(char **map, int line_count);
-bool	validate_map(char **map, int line_count);
+bool	validate_map(char **map, int line_count, t_game *game);
 void	init_game(t_game *game);
 void	init_mlx(t_game *game);
 void	cleanup_mlx(t_game *game);
@@ -71,4 +72,5 @@ void	load_image(t_game *game);
 void	validate_reachability(t_game *game);
 void	free_flood_mem(t_game *game, t_flood_fill_vars *f, int *flag);
 
+bool check_map_elements(char **map, int line_count, t_game *game); //added this line
 #endif
