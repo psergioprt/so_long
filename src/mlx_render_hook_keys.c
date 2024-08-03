@@ -77,66 +77,78 @@ int	key_press(int keycode, t_game *game)
 	int	new_x = game->player_x;
 	int	new_y = game->player_y;
 
-	if (keycode == 65307)
+	if (keycode == ESC)
 	{
 		game->should_exit = 1;
 		return (0);
 	}
-	if (keycode == 65362 || keycode == 119) //up
+	if (keycode == UP_ARROW || keycode == KEY_W)
 	{
 		if (new_y > 0 && game->map[new_y - 1][new_x] != '1')
 			new_y += -1;
 	}
-	else if (keycode == 65363 || keycode == 100) //right
+	else if (keycode == RIGHT_ARROW || keycode == KEY_D)
 	{
 		if (new_x < game->max_line_length && game->map[new_y][new_x + 1] != '1')
 			new_x += 1;
 	}
-	else if (keycode == 65364 || keycode == 115) //down
+	else if (keycode == DOWN_ARROW || keycode == KEY_S)
 	{
 		if (new_y < game->line_count && game->map[new_y + 1][new_x] != '1')
 			new_y += 1;
 	}
-	else if (keycode == 65361 || keycode == 97) //left
+	else if (keycode == LEFT_ARROW || keycode == KEY_A)
 	{
 		if (new_x > 0 && game->map[new_y][new_x - 1] != '1')
 			new_x += -1;
 	}
-	char	curElement = game->map[new_y][new_x];
-	char	prevElement = game->map[game->player_y][game->player_x];
-	if (curElement == 'C')
-	{
-		game->items_collected += 1;
-		printf("You now have %d/%d items\n", game->items_collected, game->total_items);
-	}
-	if (curElement == 'E')
-	{
-		if (game->items_collected == game->total_items)
-		{
-			printf("Well done, you have completed the map\n");
-			game->should_exit = 1;
-			return (0);
-		}
-		else
-			printf("You still need to collect all items. Collected %d so far.\n", game->items_collected);
-	}
-	if (new_x != game->player_x || new_y != game->player_y)
-	{
-		game->move_count++;
-		ft_printf("Move count %d\n", game->move_count);
-		game->map[new_y][new_x] = 'P';
-		if (prevElement == 'E')
-			game->map[game->player_y][game->player_x] = 'E';
-		else
-			game->map[game->player_y][game->player_x] = '0';
-	
-	game->player_x = new_x;
-	game->player_y = new_y;
-	}
-	printf("Player moved to [%d, %d]\n", new_y, new_x);
-	// Request a redraw
-	mlx_loop_hook(game->mlx, loop_hook, game);
-	return (0);
+	if (new_x != game->player_x || new_y != game->player_y) {
+        char curElement = game->map[new_y][new_x];
+        static char prevElement = '0';
+
+        if (curElement == 'C') {
+            game->items_collected += 1;
+            printf("You now have %d/%d items\n", game->items_collected, game->total_items);
+        }
+
+        // Check if moving to the exit
+        if (curElement == 'E') {
+            if (game->items_collected == game->total_items) {
+                printf("Well done, you have completed the map\n");
+                game->should_exit = 1;
+                return (0);
+            } else {
+                printf("You still need to collect all items. Collected %d so far.\n", game->items_collected);
+            }
+        }
+
+        game->move_count++;
+        ft_printf("Move count %d\n", game->move_count);
+
+        // Update the map with the new player position
+        game->map[new_y][new_x] = 'P';
+
+        // Restore previous position to 'E' if it was an exit
+	game->map[game->player_y][game->player_x] = prevElement;
+
+	// Remember what was under the player for the next move
+        //prevElement = (curElement == 'C' || curElement == '0') ? '0' : curElement;
+
+	if (curElement == 'C' || curElement == '0')
+		prevElement = '0';
+	else
+		prevElement = curElement;
+
+        // Update player coordinates
+        game->player_x = new_x;
+        game->player_y = new_y;
+        printf("Player moved to [%d, %d]\n", new_y, new_x);
+
+        // Request a redraw
+        mlx_loop_hook(game->mlx, loop_hook, game);
+    }
+
+    return (0);
 }
 
 static void	render_game_support_lines(t_game *game, int x, int y)

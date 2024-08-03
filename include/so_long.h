@@ -24,6 +24,16 @@
 # include "mlx.h"
 
 # define TILE_SIZE 32
+# define ESC 65307
+# define UP_ARROW 65362
+# define DOWN_ARROW 65364
+# define LEFT_ARROW 65361
+# define RIGHT_ARROW 65363
+# define KEY_W 119
+# define KEY_S 115
+# define KEY_A 97
+# define KEY_D 100
+# define DESTROY_NOTIFY 17
 
 typedef struct s_game
 {
@@ -79,6 +89,6 @@ void	init_mlx(t_game *game);
 void	load_image(t_game *game);
 void	validate_reachability(t_game *game);
 void	free_flood_mem(t_game *game, t_flood_fill_vars *f, int *flag);
-
+int		close_window(t_game *game);
 bool check_map_elements(char **map, int line_count, t_game *game); //added this line
 #endif

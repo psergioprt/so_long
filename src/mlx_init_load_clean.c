@@ -12,6 +12,15 @@
 
 #include "so_long.h"
 
+int	close_window(t_game *game)
+{
+	game->should_exit = 1;
+	cleanup_mlx(game);
+	mem_free(&game->map, game->line_count);
+	exit(0);
+	return (0);
+}
+
 static void	load_image_loading_fail_messages(t_game *game)
 {
 	if (!game->img_player || !game->img_wall || !game->img_item || \
