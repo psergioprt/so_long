@@ -82,8 +82,8 @@ static void	check_c_e_reachability(t_game *game, t_flood_fill_vars *f)
 			if ((game->map[i][j] == 'C' || game->map[i][j] == 'E') && \
 					(!f->visited[i][j]))
 			{
-				ft_printf("%c element is not reachable", \
-						game->map[i][j], i, j);
+				ft_printf("Error\n%c element is not reachable", \
+						game->map[i][j]);
 				flag = 1;
 				free_flood_mem(game, f, &flag);
 			}
@@ -108,7 +108,7 @@ void	validate_reachability(t_game *game)
 	flood_fill(&f, game->player_x, game->player_y);
 	if (f.visited[game->player_x][game->player_y] == 0)
 	{
-		ft_printf("Player 'P' is surrounded by walls\n");
+		ft_printf("Error\nPlayer 'P' is surrounded by walls\n");
 		flag = 1;
 		free_flood_mem(game, &f, &flag);
 	}

@@ -1,0 +1,1 @@
+In main function, i have replaced lseek(fd, 0, SEEK_SET), by [close (fd); fd = open(argv[1], O_RDONLY)], because i don't know if it is allowed. Function to reset the file descriptor.

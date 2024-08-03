@@ -80,7 +80,7 @@ void	mem_free(char ***map, int line_count);
 int		map_mem_allocate(char ***map, int fd, int line_ct, int max_line_lth);
 bool	check_rectangle(char **map, int line_count);
 bool	validate_map(char **map, int line_count, t_game *game);
-void	init_game(t_game *game);
+void	init_game_struct_variables(t_game *game);
 void	init_mlx(t_game *game);
 void	cleanup_mlx(t_game *game);
 int		loop_hook(t_game *game);

@@ -59,7 +59,7 @@ bool	check_map_elements(char **map, int line_count, t_game *game)
 	t_game	items;
 
 	i = 0;
-	init_game(&items);
+	init_game_struct_variables(&items);
 	while (i < line_count)
 	{
 		line_length = ft_strlen(map[i]) - 1;
@@ -75,7 +75,7 @@ bool	check_map_elements(char **map, int line_count, t_game *game)
 		}
 		i++;
 	}
-	game->total_items = items.total_items; //add this line and t_game *game in function arguments
+	game->total_items = items.total_items;
 	if (items.player != 1 || items.total_items < 1 || items.exit_map != 1)
 		return (false);
 	return (true);
@@ -112,25 +112,23 @@ bool	validate_map(char **map, int line_count, t_game *game) //added t_game *game
 {
 	if (!(check_rectangle(map, line_count)))
 	{
-		ft_printf("Map is not rectangular\n");
+		ft_printf("Error\nMap is not rectangular!\n");
 		return (false);
 	}
 	if (!(check_full_fill(map, line_count)))
 	{
-		ft_printf("Map isn't filled with only the allowed characters\n");
+		ft_printf("Error\nMap isn't filled with only the allowed characters!\n");
 		return (false);
 	}
-	if (!(check_map_elements(map, line_count, game))) //added &game
+	if (!(check_map_elements(map, line_count, game)))
 	{
-		ft_printf("Map hasn't the required element number\n");
+		ft_printf("Error\nMap hasn't the required element number!\n");
 		return (false);
 	}
 	if (!(check_wall(map, line_count)))
 	{
-		ft_printf("Wall is not correct\n");
+		ft_printf("Error\nWall is not correct!\n");
 		return (false);
 	}
-	ft_printf("Map is OK\n");
-	printf("Function validate_map, total_items_value: %d\n", game->total_items);
 	return (true);
 }

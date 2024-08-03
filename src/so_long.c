@@ -31,31 +31,6 @@ static void	map_read(int fd, int *line_count, int *max_line_length)
 	}
 }
 
-void	init_game(t_game *game)
-{
-	game->line_count = 0;
-	game->max_line_length = 0;
-	game->map = NULL;
-	game->player = 0;
-	game->item = 0;
-	game->exit_map = 0;
-	game->mlx = NULL;
-	game->window = NULL;
-	game->img_player = NULL;
-	game->img_wall = NULL;
-	game->img_exit = NULL;
-	game->img_road = NULL;
-	game->img_item = NULL;
-	game->img_width = 0;
-	game->img_height = 0;
-	game->should_exit = 0;
-	game->player_x = 0;
-	game->player_y = 0;
-	game->total_items = 0;
-	game->items_collected = 0;
-	game->move_count = 0;
-}
-
 void	start_mlx_functions(t_game *game)
 {
 	init_mlx(game);
@@ -64,35 +39,55 @@ void	start_mlx_functions(t_game *game)
 	mlx_key_hook(game->window, key_press, game);
 	mlx_hook(game->window, DESTROY_NOTIFY, 0, close_window, game);
 	mlx_loop(game->mlx);
-	
+}
+
+int	start_validations(t_game *game)
+{
+	if (!validate_map(game->map, game->line_count, game))
+	{
+		mem_free(&game->map, game->line_count);
+		return (1);
+	}
+	validate_reachability(game);
+	return (0);
+}
+
+int	start_map_mem_allocate(t_game *game, int fd)
+{
+	if (map_mem_allocate(&game->map, fd, game->line_count, \
+				game->max_line_length) != 0)
+	{
+		ft_printf("Error\nFailed to allocate map memory!\n");
+		return (1);
+	}
+	return (0);
 }
 
 int	main(int argc, char *argv[])
 {
 	int		fd;
-	t_game	game;	
+	t_game	game;
 
 	if (argc != 2)
-		return (1);
-	init_game(&game);
-	fd = open(argv[1], O_RDONLY);
-	if (fd == -1)
-		return (1);
-	map_read(fd, &game.line_count, &game.max_line_length);
-
-	lseek(fd, 0, SEEK_SET);
-	if (map_mem_allocate(&game.map, fd, game.line_count, \
-				game.max_line_length) != 0)
-		return (1);
-	add_print_lines(&game.map, fd);
-	close (fd);
-	if (!validate_map(game.map, game.line_count, &game)) //added &game
 	{
-		mem_free(&game.map, game.line_count);
+		ft_printf("Error\nPlease use '%s maps/filename.ber'\n", argv[0]);
 		return (1);
 	}
-	printf("Main after validate_map, total items value is %d\n", game.total_items);
-	validate_reachability(&game);
+	init_game_struct_variables(&game);
+	fd = open(argv[1], O_RDONLY);
+	if (fd == -1)
+	{
+		ft_printf("Error\nThe file doesn't exist or wrong name!\n");
+		return (1);
+	}
+	map_read(fd, &game.line_count, &game.max_line_length);
+	close (fd);
+	fd = open(argv[1], O_RDONLY);
+	start_map_mem_allocate(&game, fd);
+	add_print_lines(&game.map, fd);
+	close (fd);
+	if (start_validations(&game) != 0)
+		return (1);
 	start_mlx_functions(&game);
 	return (0);
 }
