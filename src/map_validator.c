@@ -58,9 +58,9 @@ bool	check_map_elements(char **map, int line_count, t_game *game)
 	int		line_length;
 	t_game	items;
 
-	i = 0;
+	i = -1;
 	init_game_struct_variables(&items);
-	while (i < line_count)
+	while (++i < line_count)
 	{
 		line_length = ft_strlen(map[i]) - 1;
 		j = 0;
@@ -73,7 +73,6 @@ bool	check_map_elements(char **map, int line_count, t_game *game)
 			if (map[i][j++] == 'E')
 				items.exit_map++;
 		}
-		i++;
 	}
 	game->total_items = items.total_items;
 	if (items.player != 1 || items.total_items < 1 || items.exit_map != 1)
@@ -108,7 +107,7 @@ bool	check_wall(char **map, int line_count)
 	return (true);
 }
 
-bool	validate_map(char **map, int line_count, t_game *game) //added t_game *game
+bool	validate_map(char **map, int line_count, t_game *game)
 {
 	if (!(check_rectangle(map, line_count)))
 	{
@@ -117,7 +116,7 @@ bool	validate_map(char **map, int line_count, t_game *game) //added t_game *game
 	}
 	if (!(check_full_fill(map, line_count)))
 	{
-		ft_printf("Error\nMap isn't filled with only the allowed characters!\n");
+		ft_printf("Error\nUnknown characters found in map!\n");
 		return (false);
 	}
 	if (!(check_map_elements(map, line_count, game)))

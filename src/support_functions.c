@@ -35,6 +35,8 @@ void	init_game_struct_variables(t_game *game)
 	game->total_items = 0;
 	game->items_collected = 0;
 	game->move_count = 0;
+	game->new_x = game->player_x;
+	game->new_x = game->player_y;
 }
 
 void	add_print_lines(char ***map, int fd)

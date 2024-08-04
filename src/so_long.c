@@ -36,7 +36,7 @@ void	start_mlx_functions(t_game *game)
 	init_mlx(game);
 	load_image(game);
 	mlx_loop_hook(game->mlx, loop_hook, game);
-	mlx_key_hook(game->window, key_press, game);
+	mlx_key_hook(game->window, update_map_moves, game);
 	mlx_hook(game->window, DESTROY_NOTIFY, 0, close_window, game);
 	mlx_loop(game->mlx);
 }

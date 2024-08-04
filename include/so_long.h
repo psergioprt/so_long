@@ -58,6 +58,8 @@ typedef struct s_game
 	int		total_items;
 	int		items_collected;
 	int		move_count;
+	int		new_x;
+	int		new_y;
 }	t_game;
 
 typedef struct s_flood_fill_vars
@@ -70,9 +72,12 @@ typedef struct s_flood_fill_vars
 
 typedef struct s_draw_shape
 {
-	int	width;
-	int	height;
-	int	color;
+	int		width;
+	int		height;
+	int		color;
+	char	*item_str;
+	char	*f_item_str;
+	int		t_colr;
 }t_draw_shape;
 
 void	add_print_lines(char ***map, int fd);
@@ -84,11 +89,15 @@ void	init_game_struct_variables(t_game *game);
 void	init_mlx(t_game *game);
 void	cleanup_mlx(t_game *game);
 int		loop_hook(t_game *game);
-int		key_press(int keycode, t_game *game);
+int		update_map_moves(int keycode, t_game *game);
 void	init_mlx(t_game *game);
 void	load_image(t_game *game);
 void	validate_reachability(t_game *game);
 void	free_flood_mem(t_game *game, t_flood_fill_vars *f, int *flag);
 int		close_window(t_game *game);
-bool check_map_elements(char **map, int line_count, t_game *game); //added this line
+bool	check_map_elements(char **map, int line_count, t_game *game);
+void	render_game(t_game *game);
+void	cursor_move_key_press(int keycode, t_game *game);
+int	window_esc_key_press(int keycode, t_game *game);
+
 #endif
