@@ -35,6 +35,18 @@
 # define KEY_D 100
 # define DESTROY_NOTIFY 17
 
+typedef struct s_enemy
+{
+	int	x;
+	int	y;
+	int	enemy_x;
+	int	enemy_y;
+	int	start_x;
+	int	start_y;
+	int	speed;
+	int	direction;
+}	t_enemy;
+
 typedef struct s_game
 {
 	int		line_count;
@@ -47,12 +59,12 @@ typedef struct s_game
 	void	*img_exit;
 	void	*img_road;
 	void	*img_item;
-	int	img_width;
-	int	img_height;
+	int		img_width;
+	int		img_height;
 	void	*mlx;
 	void	*window;
 	char	**map;
-	int	should_exit;
+	int		should_exit;
 	int		player_x;
 	int		player_y;
 	int		total_items;
@@ -60,6 +72,20 @@ typedef struct s_game
 	int		move_count;
 	int		new_x;
 	int		new_y;
+	int		enemy_x;
+	int		enemy_y;
+	int		direction;
+	int		speed;
+	void	*img_enemy;
+	t_enemy	*enemies;
+	int		lives;
+	int		num_enemies;
+
+	void	*img;
+	void	*img_data;
+	int	bpp;
+	int	size_line;
+	int	endian;
 }	t_game;
 
 typedef struct s_flood_fill_vars
@@ -68,7 +94,7 @@ typedef struct s_flood_fill_vars
 	int		rows;
 	int		cols;
 	int		**visited;
-}t_flood_fill_vars;
+}	t_flood_fill_vars;
 
 typedef struct s_draw_shape
 {
@@ -78,10 +104,12 @@ typedef struct s_draw_shape
 	char	*item_str;
 	char	*f_item_str;
 	int		t_colr;
-}t_draw_shape;
+	char	*lives_str;
+	int		lives_color;
+}	t_draw_shape;
 
 void	add_print_lines(char ***map, int fd);
-void	mem_free(char ***map, int line_count);
+void	mem_free(char ***map, int line_count, t_game *game);
 int		map_mem_allocate(char ***map, int fd, int line_ct, int max_line_lth);
 bool	check_rectangle(char **map, int line_count);
 bool	validate_map(char **map, int line_count, t_game *game);
@@ -98,6 +126,14 @@ int		close_window(t_game *game);
 bool	check_map_elements(char **map, int line_count, t_game *game);
 void	render_game(t_game *game);
 void	cursor_move_key_press(int keycode, t_game *game);
-int	window_esc_key_press(int keycode, t_game *game);
+int		window_esc_key_press(int keycode, t_game *game);
+void	init_handle_enemy_vars(t_game *game);
+void	move_enemies(t_game *game);
+void	check_player_lives(t_game *game);
+void	cleanup_enemy_array(t_game *game);
+void	map_read(int fd, int *line_count, int *max_line_length);
+
+void	draw_map_to_image(t_game *game);
+void	draw_tile_to_image(t_game *game, int x, int y);
 
 #endif

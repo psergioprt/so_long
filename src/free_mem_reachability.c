@@ -26,6 +26,7 @@ void	free_flood_mem(t_game *game, t_flood_fill_vars *f, int *flag)
 		while (i < f->rows)
 			free(game->map[i++]);
 		free(game->map);
+		cleanup_enemy_array(game);
 		exit(1);
 	}
 	else if (*flag == 0)

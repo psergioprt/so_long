@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "../include/so_long.h"
 
 int	handle_items_and_exit(t_game *game)
 {
@@ -87,6 +87,23 @@ static void	render_game_support_lines(t_game *game, int x, int y)
 		x * TILE_SIZE, y * TILE_SIZE);
 }
 
+static void	render_enemy(t_game *game)
+{
+	int	i;
+
+	i = 0;
+	while (i < game->num_enemies)
+	{
+		if (game->img_enemy)
+			mlx_put_image_to_window(game->mlx, game->window, game->img_enemy, \
+			game->enemies[i].enemy_x * TILE_SIZE, game->enemies[i].enemy_y * \
+			TILE_SIZE);
+		else
+			ft_printf("Error\nEnemy image not loaded\n");
+		i++;
+	}
+}
+
 void	render_game(t_game *game)
 {
 	int		x;
@@ -103,4 +120,5 @@ void	render_game(t_game *game)
 		}
 		y++;
 	}
+	render_enemy(game);
 }

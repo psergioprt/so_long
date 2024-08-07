@@ -10,26 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
-
-static void	map_read(int fd, int *line_count, int *max_line_length)
-{
-	char	*line;
-	char	line_length;
-
-	line = get_next_line(fd);
-	while (line != NULL)
-	{
-		line_length = ft_strlen(line);
-		if (line[line_length - 1] == '\n')
-			line_length--;
-		if (line_length > *max_line_length)
-			*max_line_length = line_length;
-		(*line_count)++;
-		free(line);
-		line = get_next_line(fd);
-	}
-}
+#include "../include/so_long.h"
 
 void	start_mlx_functions(t_game *game)
 {
@@ -45,7 +26,8 @@ int	start_validations(t_game *game)
 {
 	if (!validate_map(game->map, game->line_count, game))
 	{
-		mem_free(&game->map, game->line_count);
+		mem_free(&game->map, game->line_count, game);
+		cleanup_enemy_array(game);
 		return (1);
 	}
 	validate_reachability(game);
@@ -63,6 +45,16 @@ int	start_map_mem_allocate(t_game *game, int fd)
 	return (0);
 }
 
+int	check_fd(int fd)
+{
+	if (fd == -1)
+	{
+		ft_printf("Error\nThe file doesn't exist or wrong name!\n");
+		return (1);
+	}
+	return (0);
+}
+
 int	main(int argc, char *argv[])
 {
 	int		fd;
@@ -75,17 +67,15 @@ int	main(int argc, char *argv[])
 	}
 	init_game_struct_variables(&game);
 	fd = open(argv[1], O_RDONLY);
-	if (fd == -1)
-	{
-		ft_printf("Error\nThe file doesn't exist or wrong name!\n");
+	if (check_fd(fd) == 1)
 		return (1);
-	}
 	map_read(fd, &game.line_count, &game.max_line_length);
 	close (fd);
 	fd = open(argv[1], O_RDONLY);
 	start_map_mem_allocate(&game, fd);
 	add_print_lines(&game.map, fd);
 	close (fd);
+	init_handle_enemy_vars(&game);
 	if (start_validations(&game) != 0)
 		return (1);
 	start_mlx_functions(&game);

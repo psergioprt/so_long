@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "../include/so_long.h"
 
 void	draw_rectangle(t_game *game, t_draw_shape rectangle, int x, int y)
 {
@@ -72,7 +72,7 @@ void	display_items_collected(t_game *game)
 	}
 	v.t_colr = 0xFFFFFF;
 	rectangle.color = 0x000000;
-	x = 300;
+	x = 250;
 	y = 20;
 	rectangle.width = 130;
 	rectangle.height = 20;
@@ -85,17 +85,44 @@ void	display_items_collected(t_game *game)
 	free(v.f_item_str);
 }
 
+void	display_player_lives(t_game *game)
+{
+	t_draw_shape	lives;
+	t_draw_shape	rectangle;
+	int				x;
+	int				y;
+
+	lives.lives_str = ft_itoa(game->lives);
+	if (!lives.lives_str)
+	{
+		ft_printf("Error\nFailed to allocate memory for rectangle string\n");
+		return ;
+	}
+	lives.lives_color = 0xFFFFFF;
+	rectangle.color = 0x000000;
+	x = 550;
+	y = 20;
+	rectangle.width = 100;
+	rectangle.height = 20;
+	draw_rectangle(game, rectangle, x - 5, y - 15);
+	mlx_string_put(game->mlx, game->window, x, y, lives.lives_color, "Lives left: ");
+	mlx_string_put(game->mlx, game->window, x + 80, y, lives.lives_color, lives.lives_str);
+	free(lives.lives_str);
+}
+
 int	loop_hook(t_game *game)
 {
 	if (game->should_exit)
 	{
 		cleanup_mlx(game);
-		mem_free(&game->map, game->line_count);
+		mem_free(&game->map, game->line_count, game);
 		exit(0);
 	}
 	mlx_clear_window(game->mlx, game->window);
 	render_game(game);
+	move_enemies(game);
 	display_move_count(game);
 	display_items_collected(game);
+	display_player_lives(game);
 	return (0);
 }

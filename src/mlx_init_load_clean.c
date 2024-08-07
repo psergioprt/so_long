@@ -16,7 +16,7 @@ int	close_window(t_game *game)
 {
 	game->should_exit = 1;
 	cleanup_mlx(game);
-	mem_free(&game->map, game->line_count);
+	mem_free(&game->map, game->line_count, game);
 	exit(0);
 	return (0);
 }
@@ -27,17 +27,19 @@ static void	load_image_loading_fail_messages(t_game *game)
 		!game->img_exit || !game->img_road)
 	{
 		if (!game->img_player)
-			ft_printf("Failed to load player image\n");
+			ft_printf("Error\nFailed to load player image\n");
 		if (!game->img_wall)
-			ft_printf("Failed to load wall image\n");
+			ft_printf("Error\nFailed to load wall image\n");
 		if (!game->img_item)
-			ft_printf("Failed to load item image\n");
+			ft_printf("Error\nFailed to load item image\n");
 		if (!game->img_exit)
-			ft_printf("Failed to load exit image\n");
+			ft_printf("Error\nFailed to load exit image\n");
 		if (!game->img_road)
-			ft_printf("Failed to load road image\n");
+			ft_printf("Error\nFailed to load road image\n");
+		if (!game->img_enemy)
+			ft_printf("Error\nFailed to load enemy image\n");
 		cleanup_mlx(game);
-		mem_free(&game->map, game->line_count);
+		mem_free(&game->map, game->line_count, game);
 		exit(1);
 	}
 }
@@ -54,6 +56,8 @@ void	load_image(t_game *game)
 	&game->img_width, &game->img_height);
 	game->img_road = mlx_xpm_file_to_image(game->mlx, "./images/road.xpm", \
 	&game->img_width, &game->img_height);
+	game->img_enemy = mlx_xpm_file_to_image(game->mlx, "./images/enemy.xpm", \
+	&game->img_width, &game->img_height);
 	load_image_loading_fail_messages(game);
 }
 
@@ -69,6 +73,8 @@ void	cleanup_mlx(t_game *game)
 		mlx_destroy_image(game->mlx, game->img_exit);
 	if (game->img_road)
 		mlx_destroy_image(game->mlx, game->img_road);
+	if (game->img_enemy)
+		mlx_destroy_image(game->mlx, game->img_enemy);
 	if (game->window)
 		mlx_destroy_window(game->mlx, game->window);
 	if (game->mlx)
@@ -83,14 +89,14 @@ void	init_mlx(t_game *game)
 	game->mlx = mlx_init();
 	if (!game->mlx)
 	{
-		ft_printf("Failed to initialize MLX\n");
+		ft_printf("Error\nFailed to initialize MLX\n");
 		exit(1);
 	}
 	game->window = mlx_new_window(game->mlx, game->max_line_length * TILE_SIZE, \
 			game->line_count * TILE_SIZE, "so_long");
 	if (!game->window)
 	{
-		ft_printf("Failed to create window\n");
+		ft_printf("Error\nFailed to create window\n");
 		mlx_destroy_display(game->mlx);
 		free(game->mlx);
 		exit(1);
