@@ -81,11 +81,10 @@ typedef struct s_game
 	int		lives;
 	int		num_enemies;
 
-	void	*img;
-	void	*img_data;
-	int	bpp;
-	int	size_line;
-	int	endian;
+	char	*buffer;
+	int	img_endian;
+	int	img_line_length;
+	int	img_bits_per_pixel;
 }	t_game;
 
 typedef struct s_flood_fill_vars
@@ -133,7 +132,6 @@ void	check_player_lives(t_game *game);
 void	cleanup_enemy_array(t_game *game);
 void	map_read(int fd, int *line_count, int *max_line_length);
 
-void	draw_map_to_image(t_game *game);
-void	draw_tile_to_image(t_game *game, int x, int y);
+void	init_double_buffer(t_game *game);
 
 #endif
