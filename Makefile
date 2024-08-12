@@ -57,14 +57,14 @@ OBJS = $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRC))
 # and produces push_swap executable
 $(NAME): $(OBJS) $(LIBFT) $(PRINTF) $(GNL) $(MLX)
 	@echo "$(COLOUR_GREEN)=>Linking objects...$(COLOUR_RESET)"
-	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
+	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS) -lm
 
 # Generate object files from source files.
 # Compiles each .c in the SRCDIR into corresponding .o file in OBJDIR
 $(OBJDIR)/%.o: $(SRCDIR)/%.c $(wildcard $(INCDIR)/*.h)
 	@echo "$(COLOUR_BLUE)=>Compiling so_long...$(COLOUR_RESET)"
 	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@ -lm
 
 # To ensure GNL library is built by invoking make if GNLDIR
 $(GNL):

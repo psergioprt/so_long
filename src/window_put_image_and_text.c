@@ -91,6 +91,7 @@ void	display_player_lives(t_game *game)
 	t_draw_shape	rectangle;
 	int				x;
 	int				y;
+	int				lcolor;
 
 	lives.lives_str = ft_itoa(game->lives);
 	if (!lives.lives_str)
@@ -99,14 +100,15 @@ void	display_player_lives(t_game *game)
 		return ;
 	}
 	lives.lives_color = 0xFFFFFF;
+	lcolor = lives.lives_color;
 	rectangle.color = 0x000000;
 	x = 550;
 	y = 20;
 	rectangle.width = 100;
 	rectangle.height = 20;
 	draw_rectangle(game, rectangle, x - 5, y - 15);
-	mlx_string_put(game->mlx, game->window, x, y, lives.lives_color, "Lives left: ");
-	mlx_string_put(game->mlx, game->window, x + 80, y, lives.lives_color, lives.lives_str);
+	mlx_string_put(game->mlx, game->window, x, y, lcolor, "Lives left: ");
+	mlx_string_put(game->mlx, game->window, x + 80, y, lcolor, lives.lives_str);
 	free(lives.lives_str);
 }
 

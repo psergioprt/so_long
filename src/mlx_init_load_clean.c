@@ -63,8 +63,8 @@ void	load_image(t_game *game)
 
 void	cleanup_mlx(t_game *game)
 {
-	if (game->buffer) //added this buffer...
-        	mlx_destroy_image(game->mlx, game->buffer);
+	if (game->buffer)
+		mlx_destroy_image(game->mlx, game->buffer);
 	if (game->img_player)
 		mlx_destroy_image(game->mlx, game->img_player);
 	if (game->img_wall)
