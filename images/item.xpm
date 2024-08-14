@@ -1,34 +1,36 @@
 /* XPM */
-static char *collectible_xpm[] = {
+static char *orange_xpm[] = {
+/* columns rows colors chars-per-pixel */
 "32 32 4 1",
-"  c None",
-". c #FFFFFF",
-"o c #00FF00",
-"+ c #8B4513",
+"  c #6B6B6B",  /* Background */
+". c #FFA500",  /* Orange (Orange fruit) */
+"X c #228B22",  /* Green (Leaf) */
+"o c #000000",  /* Black (Outline) */
+/* pixels */
 "                                ",
 "                                ",
 "                                ",
 "                                ",
+"                                ",
+"                                ",
+"             ...                ",
+"           ......               ",
+"         ........               ",
+"        .........               ",
+"       ..........               ",
+"       ....X.....               ",
+"      ...X......                ",
+"      ...X......                ",
+"      ...X......                ",
+"      ...X......                ",
+"       ..X......                ",
+"       ..........               ",
+"        ..........              ",
+"         .........              ",
+"          .........             ",
+"           .......              ",
 "            ......              ",
-"          ..oooooo..            ",
-"        ..oooooooooo..          ",
-"       ..oooooooooooo..         ",
-"      ..oooooooooooooo..        ",
-"     ..oooooooooooooooo..       ",
-"     ..oooooooooooooooo..       ",
-"      ..oooooooooooooo..        ",
-"       ..oooooooooooo..         ",
-"        ..oooooooooo..          ",
-"         ..ooooooo...           ",
-"          ..oooooo..            ",
-"           ..oooo..             ",
-"            ......              ",
-"             ....               ",
-"              ..                ",
-"             ++++               ",
-"             ++++               ",
-"             ++++               ",
-"             ++++               ",
+"             ...                ",
 "                                ",
 "                                ",
 "                                ",
@@ -38,3 +40,4 @@ static char *collectible_xpm[] = {
 "                                ",
 "                                "
 };
+

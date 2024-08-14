@@ -37,4 +37,5 @@ void	init_game_struct_variables(t_game *game)
 	game->move_count = 0;
 	game->new_x = game->player_x;
 	game->new_y = game->player_y;
+	game->buffer = NULL;
 }

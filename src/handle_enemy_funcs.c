@@ -58,7 +58,7 @@ void	init_handle_enemy_vars(t_game *game)
 		game->enemies[i].direction = rand() % 4;
 		i++;
 	}
-	game->lives = 5;
+	game->lives = 100;
 }
 
 void	check_enemy_moves_direction_boundaries(t_game *game, int i)
@@ -122,7 +122,7 @@ void	check_player_lives(t_game *game)
 		if (game->player_x == game->enemies[i].enemy_x && \
 			game->player_y == game->enemies[i].enemy_y)
 		{
-			game->lives--;
+			game->lives -= 25;
 			ft_printf("You lost a life, you have %d lives left\n", game->lives);
 			if (game->lives <= 0)
 			{

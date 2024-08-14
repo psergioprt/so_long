@@ -60,6 +60,7 @@ int	update_map_moves(int keycode, t_game *game)
 			prev_element = '0';
 		else
 			prev_element = cur_element;
+		check_player_lives(game);
 	}
 	return (0);
 }

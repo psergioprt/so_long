@@ -74,13 +74,13 @@ void	display_items_collected(t_game *game)
 	rectangle.color = 0x000000;
 	x = 250;
 	y = 20;
-	rectangle.width = 130;
+	rectangle.width = 140;
 	rectangle.height = 20;
 	draw_rectangle(game, rectangle, x - 5, y - 15);
 	mlx_string_put(game->mlx, game->window, x, y, v.t_colr, "Collected: ");
-	mlx_string_put(game->mlx, game->window, x + 80, y, v.t_colr, v.item_str);
-	mlx_string_put(game->mlx, game->window, x + 90, y, v.t_colr, " / ");
-	mlx_string_put(game->mlx, game->window, x + 110, y, v.t_colr, v.f_item_str);
+	mlx_string_put(game->mlx, game->window, x + 70, y, v.t_colr, v.item_str);
+	mlx_string_put(game->mlx, game->window, x + 80, y, v.t_colr, " / ");
+	mlx_string_put(game->mlx, game->window, x + 100, y, v.t_colr, v.f_item_str);
 	free(v.item_str);
 	free(v.f_item_str);
 }
@@ -104,11 +104,11 @@ void	display_player_lives(t_game *game)
 	rectangle.color = 0x000000;
 	x = 550;
 	y = 20;
-	rectangle.width = 100;
+	rectangle.width = 80;
 	rectangle.height = 20;
 	draw_rectangle(game, rectangle, x - 5, y - 15);
-	mlx_string_put(game->mlx, game->window, x, y, lcolor, "Lives left: ");
-	mlx_string_put(game->mlx, game->window, x + 80, y, lcolor, lives.lives_str);
+	mlx_string_put(game->mlx, game->window, x, y, lcolor, "Energy: ");
+	mlx_string_put(game->mlx, game->window, x + 50, y, lcolor, lives.lives_str);
 	free(lives.lives_str);
 }
 
