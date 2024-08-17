@@ -23,7 +23,7 @@
 # include "../util_funcs/get_next_line/get_next_line.h"
 # include "mlx.h"
 
-# define TILE_SIZE 32
+# define TILE_SIZE 48 
 # define ESC 65307
 # define UP_ARROW 65362
 # define DOWN_ARROW 65364
@@ -35,25 +35,47 @@
 # define KEY_D 100
 # define DESTROY_NOTIFY 17
 
+# if TILE_SIZE == 32
+#  define IMG_PLAYER_LEFT "./images/img_player_left_32.xpm"
+#  define IMG_PLAYER_RIGHT "./images/img_player_right_32.xpm"
+#  define IMG_PLAYER_UP "./images/img_player_up_32.xpm"
+#  define IMG_PLAYER_DOWN "./images/img_player_down_32.xpm"
+#  define WALL "./images/wall_32.xpm"
+#  define ROAD "./images/road_32.xpm"
+#  define ITEM "./images/item_32.xpm"
+#  define ENEMY "./images/enemy_32.xpm"
+#  define EXIT "./images/exit_32.xpm"
+# elif TILE_SIZE == 48
+#  define IMG_PLAYER_LEFT "./images/img_player_left_48.xpm"
+#  define IMG_PLAYER_RIGHT "./images/img_player_right_48.xpm"
+#  define IMG_PLAYER_UP "./images/img_player_up_48.xpm"
+#  define IMG_PLAYER_DOWN "./images/img_player_down_48.xpm"
+#  define WALL "./images/wall_48.xpm"
+#  define ROAD "./images/road_48.xpm"
+#  define ITEM "./images/item_48.xpm"
+#  define ENEMY "./images/enemy_48.xpm"
+#  define EXIT "./images/exit_48.xpm"
+# endif
+
 typedef struct s_enemy
 {
-	int	x;
-	int	y;
-	int	enemy_x;
-	int	enemy_y;
-	int	start_x;
-	int	start_y;
-	int	speed;
-	int	direction;
+	int		x;
+	int		y;
+	int		enemy_x;
+	int		enemy_y;
+	int		start_x;
+	int		start_y;
+	int		speed;
+	int		direction;
 }	t_enemy;
 
 typedef struct s_player_image
 {
-	void *img_player_up;
-	void *img_player_down;
-	void *img_player_left;
-	void *img_player_right;
-}	t_player_image;
+	void	*img_player_up;
+	void	*img_player_down;
+	void	*img_player_left;
+	void	*img_player_right;
+}	t_pl_im;
 
 typedef struct s_game
 {
@@ -92,11 +114,10 @@ typedef struct s_game
 	int		img_endian;
 	int		img_line_length;
 	int		img_bits_per_pixel;
-	int		tile_width;
-	int		tile_height;
 	int		prev_player_x;
 	int		prev_player_y;
-	t_player_image	*player_images;
+	int		buffer_size;
+	t_pl_im	*player_images;
 
 }	t_game;
 

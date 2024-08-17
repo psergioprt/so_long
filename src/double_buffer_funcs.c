@@ -32,7 +32,7 @@ void	draw_tile_to_buffer(t_game *game, void *image, int x, int y)
 	int		tile_pos;
 
 	i = 0;
-	tile_data = mlx_get_data_addr(image, &game->tile_width, &game->tile_height, \
+	tile_data = mlx_get_data_addr(image, &game->img_width, &game->img_height, \
 			&game->img_endian);
 	while (i < TILE_SIZE)
 	{
@@ -41,7 +41,7 @@ void	draw_tile_to_buffer(t_game *game, void *image, int x, int y)
 		{
 			buffer_pos = ((y * TILE_SIZE + i) * game->img_line_length + \
 					(x * TILE_SIZE + j) * (game->img_bits_per_pixel / 8));
-			tile_pos = (i * game->tile_width + j) * \
+			tile_pos = (i * game->img_width + j) * \
 				(game->img_bits_per_pixel / 8);
 			*(int *)(game->buffer_data + buffer_pos) = \
 					*(int *)(tile_data + tile_pos);

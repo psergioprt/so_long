@@ -20,7 +20,7 @@ void	move_player_up(t_game *game)
 	{
 		game->new_y--;
 		new_image = mlx_xpm_file_to_image(game->mlx, \
-				"./images/img_player_up.xpm", \
+				IMG_PLAYER_UP, \
 				&game->img_width, &game->img_height);
 		if (game->img_player)
 			mlx_destroy_image(game->mlx, game->img_player);
@@ -37,7 +37,7 @@ void	move_player_right(t_game *game)
 	{
 		game->new_x++;
 		new_image = mlx_xpm_file_to_image(game->mlx, \
-				"./images/img_player_right.xpm", \
+				IMG_PLAYER_RIGHT, \
 				&game->img_width, &game->img_height);
 		if (game->img_player)
 			mlx_destroy_image(game->mlx, game->img_player);
@@ -54,7 +54,7 @@ void	move_player_down(t_game *game)
 	{
 		game->new_y++;
 		new_image = mlx_xpm_file_to_image(game->mlx, \
-				"./images/img_player_down.xpm", \
+				IMG_PLAYER_DOWN, \
 				&game->img_width, &game->img_height);
 		if (game->img_player)
 			mlx_destroy_image(game->mlx, game->img_player);
@@ -70,7 +70,7 @@ void	move_player_left(t_game *game)
 	{
 		game->new_x--;
 		new_image = mlx_xpm_file_to_image(game->mlx, \
-				"./images/img_player_left.xpm", \
+				IMG_PLAYER_LEFT, \
 				&game->img_width, &game->img_height);
 		if (game->img_player)
 			mlx_destroy_image(game->mlx, game->img_player);

@@ -38,7 +38,6 @@ static void	load_image_loading_fail_messages(t_game *game)
 		if (!game->img_enemy)
 			ft_printf("Error\nFailed to load enemy image\n");
 		free_game_resources(game);
-		free(game->img_player);
 		exit(1);
 	}
 }
@@ -52,25 +51,25 @@ void	if_img_player_not_null(t_game *game)
 void	check_player_images(t_game *game)
 {
 	game->img_player = mlx_xpm_file_to_image(game->mlx, \
-			"./images/img_player_left.xpm", \
+			IMG_PLAYER_LEFT, \
 			&game->img_width, &game->img_height);
 	if (!game->img_player)
 		output_clean_player_image_read_error(game);
 	if_img_player_not_null(game);
 	game->img_player = mlx_xpm_file_to_image(game->mlx, \
-			"./images/img_player_right.xpm", \
+			IMG_PLAYER_RIGHT, \
 			&game->img_width, &game->img_height);
 	if (!game->img_player)
 		output_clean_player_image_read_error(game);
 	if_img_player_not_null(game);
 	game->img_player = mlx_xpm_file_to_image(game->mlx, \
-			"./images/img_player_up.xpm", \
+			IMG_PLAYER_UP, \
 			&game->img_width, &game->img_height);
 	if (!game->img_player)
 		output_clean_player_image_read_error(game);
 	if_img_player_not_null(game);
 	game->img_player = mlx_xpm_file_to_image(game->mlx, \
-			"./images/img_player_down.xpm", \
+			IMG_PLAYER_DOWN, \
 			&game->img_width, &game->img_height);
 	if (!game->img_player)
 		output_clean_player_image_read_error(game);
@@ -79,19 +78,24 @@ void	check_player_images(t_game *game)
 
 void	load_image(t_game *game)
 {
-	game->img_wall = mlx_xpm_file_to_image(game->mlx, "./images/wall.xpm", \
+	game->img_wall = mlx_xpm_file_to_image(game->mlx, WALL, \
 	&game->img_width, &game->img_height);
-	game->img_item = mlx_xpm_file_to_image(game->mlx, "./images/item.xpm", \
+	game->img_item = mlx_xpm_file_to_image(game->mlx, ITEM, \
 	&game->img_width, &game->img_height);
-	game->img_exit = mlx_xpm_file_to_image(game->mlx, "./images/exit.xpm", \
+	game->img_exit = mlx_xpm_file_to_image(game->mlx, EXIT, \
 	&game->img_width, &game->img_height);
-	game->img_road = mlx_xpm_file_to_image(game->mlx, "./images/road.xpm", \
+	game->img_road = mlx_xpm_file_to_image(game->mlx, ROAD, \
 	&game->img_width, &game->img_height);
-	game->img_enemy = mlx_xpm_file_to_image(game->mlx, "./images/enemy.xpm", \
+	game->img_enemy = mlx_xpm_file_to_image(game->mlx, ENEMY, \
 	&game->img_width, &game->img_height);
 	check_player_images(game);
 	game->img_player = mlx_xpm_file_to_image(game->mlx, \
-			"./images/img_player_left.xpm", \
+			IMG_PLAYER_DOWN, \
 			&game->img_width, &game->img_height);
 	load_image_loading_fail_messages(game);
+	ft_printf("img_height -> %d\n", game->img_height);
+	ft_printf("img_width -> %d\n", game->img_width);
+	ft_printf("TILE_SIZE -> %d\n", TILE_SIZE);
+	ft_printf("map length -> %d\n", game->max_line_length);
+	ft_printf("map line count -> %d\n", game->line_count);
 }

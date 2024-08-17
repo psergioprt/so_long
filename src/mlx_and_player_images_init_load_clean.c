@@ -14,7 +14,7 @@
 
 void	init_game_player_images(t_game *game)
 {
-	game->player_images = (t_player_image *)malloc(sizeof(t_player_image));
+	game->player_images = (t_pl_im *)malloc(sizeof(t_pl_im));
 	if (game->player_images == NULL)
 	{
 		ft_printf("Error\nFailed to allocate memory for player_images\n");
