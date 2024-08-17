@@ -122,13 +122,14 @@ void	check_player_lives(t_game *game)
 		if (game->player_x == game->enemies[i].enemy_x && \
 			game->player_y == game->enemies[i].enemy_y)
 		{
-			game->lives -= 25;
-			ft_printf("You lost a life, you have %d lives left\n", game->lives);
+			game->lives -= 10;
+			ft_printf("You lost life, you have %d life left\n", game->lives);
 			if (game->lives <= 0)
 			{
-				ft_printf("You have run out of lives. Game Over\n");
+				ft_printf("No more life left. Game Over\n");
 				mem_free(&game->map, game->line_count, game);
 				cleanup_mlx(game);
+				free(game->player_images);
 				exit(0);
 			}
 			return ;

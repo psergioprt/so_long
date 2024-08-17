@@ -1,0 +1,265 @@
+==60252== Memcheck, a memory error detector
+==60252== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==60252== Using Valgrind-3.19.0 and LibVEX; rerun with -h for copyright info
+==60252== Command: ./so_long maps/map2.ber
+==60252== Parent PID: 41939
+==60252== 
+==60252== Invalid read of size 4
+==60252==    at 0x1150E0: mlx_destroy_image (in /home/paulo/Programming/42/git/so_long/so_long)
+==60252==    by 0x1106FF: cleanup_mlx (mlx_init_load_clean.c:137)
+==60252==    by 0x1118A3: loop_hook (window_put_image_and_text.c:119)
+==60252==    by 0x1134B7: mlx_loop (in /home/paulo/Programming/42/git/so_long/so_long)
+==60252==    by 0x110E27: start_mlx_functions (so_long.c:23)
+==60252==    by 0x11104F: main (so_long.c:82)
+==60252==  Address 0x4f56ba8 is 40 bytes inside a block of size 88 free'd
+==60252==    at 0x4887B40: free (vg_replace_malloc.c:872)
+==60252==    by 0x115123: mlx_destroy_image (in /home/paulo/Programming/42/git/so_long/so_long)
+==60252==    by 0x11052B: cleanup_mlx (mlx_init_load_clean.c:89)
+==60252==    by 0x1118A3: loop_hook (window_put_image_and_text.c:119)
+==60252==    by 0x1134B7: mlx_loop (in /home/paulo/Programming/42/git/so_long/so_long)
+==60252==    by 0x110E27: start_mlx_functions (so_long.c:23)
+==60252==    by 0x11104F: main (so_long.c:82)
+==60252==  Block was alloc'd at
+==60252==    at 0x4889F94: calloc (vg_replace_malloc.c:1328)
+==60252==    by 0x1137FF: mlx_int_new_xshm_image (in /home/paulo/Programming/42/git/so_long/so_long)
+==60252==    by 0x113B5F: mlx_new_image (in /home/paulo/Programming/42/git/so_long/so_long)
+==60252==    by 0x1144EF: mlx_int_parse_xpm (in /home/paulo/Programming/42/git/so_long/so_long)
+==60252==    by 0x11491F: mlx_xpm_file_to_image (in /home/paulo/Programming/42/git/so_long/so_long)
+==60252==    by 0x11049F: load_image (mlx_init_load_clean.c:75)
+==60252==    by 0x110DC3: start_mlx_functions (so_long.c:18)
+==60252==    by 0x11104F: main (so_long.c:82)
+==60252== 
+==60252== Invalid read of size 8
+==60252==    at 0x48C90D4: XShmDetach (in /usr/lib/aarch64-linux-gnu/libXext.so.6.4.0)
+==60252==    by 0x115153: mlx_destroy_image (in /home/paulo/Programming/42/git/so_long/so_long)
+==60252==    by 0x1106FF: cleanup_mlx (mlx_init_load_clean.c:137)
+==60252==    by 0x1118A3: loop_hook (window_put_image_and_text.c:119)
+==60252==    by 0x1134B7: mlx_loop (in /home/paulo/Programming/42/git/so_long/so_long)
+==60252==    by 0x110E27: start_mlx_functions (so_long.c:23)
+==60252==    by 0x11104F: main (so_long.c:82)
+==60252==  Address 0x4f56bb8 is 56 bytes inside a block of size 88 free'd
+==60252==    at 0x4887B40: free (vg_replace_malloc.c:872)
+==60252==    by 0x115123: mlx_destroy_image (in /home/paulo/Programming/42/git/so_long/so_long)
+==60252==    by 0x11052B: cleanup_mlx (mlx_init_load_clean.c:89)
+==60252==    by 0x1118A3: loop_hook (window_put_image_and_text.c:119)
+==60252==    by 0x1134B7: mlx_loop (in /home/paulo/Programming/42/git/so_long/so_long)
+==60252==    by 0x110E27: start_mlx_functions (so_long.c:23)
+==60252==    by 0x11104F: main (so_long.c:82)
+==60252==  Block was alloc'd at
+==60252==    at 0x4889F94: calloc (vg_replace_malloc.c:1328)
+==60252==    by 0x1137FF: mlx_int_new_xshm_image (in /home/paulo/Programming/42/git/so_long/so_long)
+==60252==    by 0x113B5F: mlx_new_image (in /home/paulo/Programming/42/git/so_long/so_long)
+==60252==    by 0x1144EF: mlx_int_parse_xpm (in /home/paulo/Programming/42/git/so_long/so_long)
+==60252==    by 0x11491F: mlx_xpm_file_to_image (in /home/paulo/Programming/42/git/so_long/so_long)
+==60252==    by 0x11049F: load_image (mlx_init_load_clean.c:75)
+==60252==    by 0x110DC3: start_mlx_functions (so_long.c:18)
+==60252==    by 0x11104F: main (so_long.c:82)
+==60252== 
+==60252== Invalid read of size 8
+==60252==    at 0x115154: mlx_destroy_image (in /home/paulo/Programming/42/git/so_long/so_long)
+==60252==    by 0x1106FF: cleanup_mlx (mlx_init_load_clean.c:137)
+==60252==    by 0x1118A3: loop_hook (window_put_image_and_text.c:119)
+==60252==    by 0x1134B7: mlx_loop (in /home/paulo/Programming/42/git/so_long/so_long)
+==60252==    by 0x110E27: start_mlx_functions (so_long.c:23)
+==60252==    by 0x11104F: main (so_long.c:82)
+==60252==  Address 0x4f56bc8 is 72 bytes inside a block of size 88 free'd
+==60252==    at 0x4887B40: free (vg_replace_malloc.c:872)
+==60252==    by 0x115123: mlx_destroy_image (in /home/paulo/Programming/42/git/so_long/so_long)
+==60252==    by 0x11052B: cleanup_mlx (mlx_init_load_clean.c:89)
+==60252==    by 0x1118A3: loop_hook (window_put_image_and_text.c:119)
+==60252==    by 0x1134B7: mlx_loop (in /home/paulo/Programming/42/git/so_long/so_long)
+==60252==    by 0x110E27: start_mlx_functions (so_long.c:23)
+==60252==    by 0x11104F: main (so_long.c:82)
+==60252==  Block was alloc'd at
+==60252==    at 0x4889F94: calloc (vg_replace_malloc.c:1328)
+==60252==    by 0x1137FF: mlx_int_new_xshm_image (in /home/paulo/Programming/42/git/so_long/so_long)
+==60252==    by 0x113B5F: mlx_new_image (in /home/paulo/Programming/42/git/so_long/so_long)
+==60252==    by 0x1144EF: mlx_int_parse_xpm (in /home/paulo/Programming/42/git/so_long/so_long)
+==60252==    by 0x11491F: mlx_xpm_file_to_image (in /home/paulo/Programming/42/git/so_long/so_long)
+==60252==    by 0x11049F: load_image (mlx_init_load_clean.c:75)
+==60252==    by 0x110DC3: start_mlx_functions (so_long.c:18)
+==60252==    by 0x11104F: main (so_long.c:82)
+==60252== 
+==60252== Invalid read of size 8
+==60252==    at 0x11515C: mlx_destroy_image (in /home/paulo/Programming/42/git/so_long/so_long)
+==60252==    by 0x1106FF: cleanup_mlx (mlx_init_load_clean.c:137)
+==60252==    by 0x1118A3: loop_hook (window_put_image_and_text.c:119)
+==60252==    by 0x1134B7: mlx_loop (in /home/paulo/Programming/42/git/so_long/so_long)
+==60252==    by 0x110E27: start_mlx_functions (so_long.c:23)
+==60252==    by 0x11104F: main (so_long.c:82)
+==60252==  Address 0x4f56b80 is 0 bytes inside a block of size 88 free'd
+==60252==    at 0x4887B40: free (vg_replace_malloc.c:872)
+==60252==    by 0x115123: mlx_destroy_image (in /home/paulo/Programming/42/git/so_long/so_long)
+==60252==    by 0x11052B: cleanup_mlx (mlx_init_load_clean.c:89)
+==60252==    by 0x1118A3: loop_hook (window_put_image_and_text.c:119)
+==60252==    by 0x1134B7: mlx_loop (in /home/paulo/Programming/42/git/so_long/so_long)
+==60252==    by 0x110E27: start_mlx_functions (so_long.c:23)
+==60252==    by 0x11104F: main (so_long.c:82)
+==60252==  Block was alloc'd at
+==60252==    at 0x4889F94: calloc (vg_replace_malloc.c:1328)
+==60252==    by 0x1137FF: mlx_int_new_xshm_image (in /home/paulo/Programming/42/git/so_long/so_long)
+==60252==    by 0x113B5F: mlx_new_image (in /home/paulo/Programming/42/git/so_long/so_long)
+==60252==    by 0x1144EF: mlx_int_parse_xpm (in /home/paulo/Programming/42/git/so_long/so_long)
+==60252==    by 0x11491F: mlx_xpm_file_to_image (in /home/paulo/Programming/42/git/so_long/so_long)
+==60252==    by 0x11049F: load_image (mlx_init_load_clean.c:75)
+==60252==    by 0x110DC3: start_mlx_functions (so_long.c:18)
+==60252==    by 0x11104F: main (so_long.c:82)
+==60252== 
+==60252== Invalid read of size 8
+==60252==    at 0x1150F8: mlx_destroy_image (in /home/paulo/Programming/42/git/so_long/so_long)
+==60252==    by 0x1106FF: cleanup_mlx (mlx_init_load_clean.c:137)
+==60252==    by 0x1118A3: loop_hook (window_put_image_and_text.c:119)
+==60252==    by 0x1134B7: mlx_loop (in /home/paulo/Programming/42/git/so_long/so_long)
+==60252==    by 0x110E27: start_mlx_functions (so_long.c:23)
+==60252==    by 0x11104F: main (so_long.c:82)
+==60252==  Address 0x4f56c80 is 96 bytes inside a block of size 136 free'd
+==60252==    at 0x4887B40: free (vg_replace_malloc.c:872)
+==60252==    by 0x48C893B: ??? (in /usr/lib/aarch64-linux-gnu/libXext.so.6.4.0)
+==60252==    by 0x1150FF: mlx_destroy_image (in /home/paulo/Programming/42/git/so_long/so_long)
+==60252==    by 0x11052B: cleanup_mlx (mlx_init_load_clean.c:89)
+==60252==    by 0x1118A3: loop_hook (window_put_image_and_text.c:119)
+==60252==    by 0x1134B7: mlx_loop (in /home/paulo/Programming/42/git/so_long/so_long)
+==60252==    by 0x110E27: start_mlx_functions (so_long.c:23)
+==60252==    by 0x11104F: main (so_long.c:82)
+==60252==  Block was alloc'd at
+==60252==    at 0x4889F94: calloc (vg_replace_malloc.c:1328)
+==60252==    by 0x48C9187: XShmCreateImage (in /usr/lib/aarch64-linux-gnu/libXext.so.6.4.0)
+==60252==    by 0x11382F: mlx_int_new_xshm_image (in /home/paulo/Programming/42/git/so_long/so_long)
+==60252==    by 0x113B5F: mlx_new_image (in /home/paulo/Programming/42/git/so_long/so_long)
+==60252==    by 0x1144EF: mlx_int_parse_xpm (in /home/paulo/Programming/42/git/so_long/so_long)
+==60252==    by 0x11491F: mlx_xpm_file_to_image (in /home/paulo/Programming/42/git/so_long/so_long)
+==60252==    by 0x11049F: load_image (mlx_init_load_clean.c:75)
+==60252==    by 0x110DC3: start_mlx_functions (so_long.c:18)
+==60252==    by 0x11104F: main (so_long.c:82)
+==60252== 
+==60252== Invalid free() / delete / delete[] / realloc()
+==60252==    at 0x4887B40: free (vg_replace_malloc.c:872)
+==60252==    by 0x48C893B: ??? (in /usr/lib/aarch64-linux-gnu/libXext.so.6.4.0)
+==60252==    by 0x1150FF: mlx_destroy_image (in /home/paulo/Programming/42/git/so_long/so_long)
+==60252==    by 0x1106FF: cleanup_mlx (mlx_init_load_clean.c:137)
+==60252==    by 0x1118A3: loop_hook (window_put_image_and_text.c:119)
+==60252==    by 0x1134B7: mlx_loop (in /home/paulo/Programming/42/git/so_long/so_long)
+==60252==    by 0x110E27: start_mlx_functions (so_long.c:23)
+==60252==    by 0x11104F: main (so_long.c:82)
+==60252==  Address 0x4f56c20 is 0 bytes inside a block of size 136 free'd
+==60252==    at 0x4887B40: free (vg_replace_malloc.c:872)
+==60252==    by 0x48C893B: ??? (in /usr/lib/aarch64-linux-gnu/libXext.so.6.4.0)
+==60252==    by 0x1150FF: mlx_destroy_image (in /home/paulo/Programming/42/git/so_long/so_long)
+==60252==    by 0x11052B: cleanup_mlx (mlx_init_load_clean.c:89)
+==60252==    by 0x1118A3: loop_hook (window_put_image_and_text.c:119)
+==60252==    by 0x1134B7: mlx_loop (in /home/paulo/Programming/42/git/so_long/so_long)
+==60252==    by 0x110E27: start_mlx_functions (so_long.c:23)
+==60252==    by 0x11104F: main (so_long.c:82)
+==60252==  Block was alloc'd at
+==60252==    at 0x4889F94: calloc (vg_replace_malloc.c:1328)
+==60252==    by 0x48C9187: XShmCreateImage (in /usr/lib/aarch64-linux-gnu/libXext.so.6.4.0)
+==60252==    by 0x11382F: mlx_int_new_xshm_image (in /home/paulo/Programming/42/git/so_long/so_long)
+==60252==    by 0x113B5F: mlx_new_image (in /home/paulo/Programming/42/git/so_long/so_long)
+==60252==    by 0x1144EF: mlx_int_parse_xpm (in /home/paulo/Programming/42/git/so_long/so_long)
+==60252==    by 0x11491F: mlx_xpm_file_to_image (in /home/paulo/Programming/42/git/so_long/so_long)
+==60252==    by 0x11049F: load_image (mlx_init_load_clean.c:75)
+==60252==    by 0x110DC3: start_mlx_functions (so_long.c:18)
+==60252==    by 0x11104F: main (so_long.c:82)
+==60252== 
+==60252== Invalid read of size 8
+==60252==    at 0x115104: mlx_destroy_image (in /home/paulo/Programming/42/git/so_long/so_long)
+==60252==    by 0x1106FF: cleanup_mlx (mlx_init_load_clean.c:137)
+==60252==    by 0x1118A3: loop_hook (window_put_image_and_text.c:119)
+==60252==    by 0x1134B7: mlx_loop (in /home/paulo/Programming/42/git/so_long/so_long)
+==60252==    by 0x110E27: start_mlx_functions (so_long.c:23)
+==60252==    by 0x11104F: main (so_long.c:82)
+==60252==  Address 0x4f56b88 is 8 bytes inside a block of size 88 free'd
+==60252==    at 0x4887B40: free (vg_replace_malloc.c:872)
+==60252==    by 0x115123: mlx_destroy_image (in /home/paulo/Programming/42/git/so_long/so_long)
+==60252==    by 0x11052B: cleanup_mlx (mlx_init_load_clean.c:89)
+==60252==    by 0x1118A3: loop_hook (window_put_image_and_text.c:119)
+==60252==    by 0x1134B7: mlx_loop (in /home/paulo/Programming/42/git/so_long/so_long)
+==60252==    by 0x110E27: start_mlx_functions (so_long.c:23)
+==60252==    by 0x11104F: main (so_long.c:82)
+==60252==  Block was alloc'd at
+==60252==    at 0x4889F94: calloc (vg_replace_malloc.c:1328)
+==60252==    by 0x1137FF: mlx_int_new_xshm_image (in /home/paulo/Programming/42/git/so_long/so_long)
+==60252==    by 0x113B5F: mlx_new_image (in /home/paulo/Programming/42/git/so_long/so_long)
+==60252==    by 0x1144EF: mlx_int_parse_xpm (in /home/paulo/Programming/42/git/so_long/so_long)
+==60252==    by 0x11491F: mlx_xpm_file_to_image (in /home/paulo/Programming/42/git/so_long/so_long)
+==60252==    by 0x11049F: load_image (mlx_init_load_clean.c:75)
+==60252==    by 0x110DC3: start_mlx_functions (so_long.c:18)
+==60252==    by 0x11104F: main (so_long.c:82)
+==60252== 
+==60252== Invalid read of size 8
+==60252==    at 0x11510C: mlx_destroy_image (in /home/paulo/Programming/42/git/so_long/so_long)
+==60252==    by 0x1106FF: cleanup_mlx (mlx_init_load_clean.c:137)
+==60252==    by 0x1118A3: loop_hook (window_put_image_and_text.c:119)
+==60252==    by 0x1134B7: mlx_loop (in /home/paulo/Programming/42/git/so_long/so_long)
+==60252==    by 0x110E27: start_mlx_functions (so_long.c:23)
+==60252==    by 0x11104F: main (so_long.c:82)
+==60252==  Address 0x4f56b90 is 16 bytes inside a block of size 88 free'd
+==60252==    at 0x4887B40: free (vg_replace_malloc.c:872)
+==60252==    by 0x115123: mlx_destroy_image (in /home/paulo/Programming/42/git/so_long/so_long)
+==60252==    by 0x11052B: cleanup_mlx (mlx_init_load_clean.c:89)
+==60252==    by 0x1118A3: loop_hook (window_put_image_and_text.c:119)
+==60252==    by 0x1134B7: mlx_loop (in /home/paulo/Programming/42/git/so_long/so_long)
+==60252==    by 0x110E27: start_mlx_functions (so_long.c:23)
+==60252==    by 0x11104F: main (so_long.c:82)
+==60252==  Block was alloc'd at
+==60252==    at 0x4889F94: calloc (vg_replace_malloc.c:1328)
+==60252==    by 0x1137FF: mlx_int_new_xshm_image (in /home/paulo/Programming/42/git/so_long/so_long)
+==60252==    by 0x113B5F: mlx_new_image (in /home/paulo/Programming/42/git/so_long/so_long)
+==60252==    by 0x1144EF: mlx_int_parse_xpm (in /home/paulo/Programming/42/git/so_long/so_long)
+==60252==    by 0x11491F: mlx_xpm_file_to_image (in /home/paulo/Programming/42/git/so_long/so_long)
+==60252==    by 0x11049F: load_image (mlx_init_load_clean.c:75)
+==60252==    by 0x110DC3: start_mlx_functions (so_long.c:18)
+==60252==    by 0x11104F: main (so_long.c:82)
+==60252== 
+==60252== Invalid free() / delete / delete[] / realloc()
+==60252==    at 0x4887B40: free (vg_replace_malloc.c:872)
+==60252==    by 0x115123: mlx_destroy_image (in /home/paulo/Programming/42/git/so_long/so_long)
+==60252==    by 0x1106FF: cleanup_mlx (mlx_init_load_clean.c:137)
+==60252==    by 0x1118A3: loop_hook (window_put_image_and_text.c:119)
+==60252==    by 0x1134B7: mlx_loop (in /home/paulo/Programming/42/git/so_long/so_long)
+==60252==    by 0x110E27: start_mlx_functions (so_long.c:23)
+==60252==    by 0x11104F: main (so_long.c:82)
+==60252==  Address 0x4f56b80 is 0 bytes inside a block of size 88 free'd
+==60252==    at 0x4887B40: free (vg_replace_malloc.c:872)
+==60252==    by 0x115123: mlx_destroy_image (in /home/paulo/Programming/42/git/so_long/so_long)
+==60252==    by 0x11052B: cleanup_mlx (mlx_init_load_clean.c:89)
+==60252==    by 0x1118A3: loop_hook (window_put_image_and_text.c:119)
+==60252==    by 0x1134B7: mlx_loop (in /home/paulo/Programming/42/git/so_long/so_long)
+==60252==    by 0x110E27: start_mlx_functions (so_long.c:23)
+==60252==    by 0x11104F: main (so_long.c:82)
+==60252==  Block was alloc'd at
+==60252==    at 0x4889F94: calloc (vg_replace_malloc.c:1328)
+==60252==    by 0x1137FF: mlx_int_new_xshm_image (in /home/paulo/Programming/42/git/so_long/so_long)
+==60252==    by 0x113B5F: mlx_new_image (in /home/paulo/Programming/42/git/so_long/so_long)
+==60252==    by 0x1144EF: mlx_int_parse_xpm (in /home/paulo/Programming/42/git/so_long/so_long)
+==60252==    by 0x11491F: mlx_xpm_file_to_image (in /home/paulo/Programming/42/git/so_long/so_long)
+==60252==    by 0x11049F: load_image (mlx_init_load_clean.c:75)
+==60252==    by 0x110DC3: start_mlx_functions (so_long.c:18)
+==60252==    by 0x11104F: main (so_long.c:82)
+==60252== 
+==60252== 
+==60252== HEAP SUMMARY:
+==60252==     in use at exit: 156,282 bytes in 1,636 blocks
+==60252==   total heap usage: 4,887 allocs, 3,253 frees, 2,544,436 bytes allocated
+==60252== 
+==60252== 224 (88 direct, 136 indirect) bytes in 1 blocks are definitely lost in loss record 91 of 123
+==60252==    at 0x4889F94: calloc (vg_replace_malloc.c:1328)
+==60252==    by 0x1137FF: mlx_int_new_xshm_image (in /home/paulo/Programming/42/git/so_long/so_long)
+==60252==    by 0x113B5F: mlx_new_image (in /home/paulo/Programming/42/git/so_long/so_long)
+==60252==    by 0x1144EF: mlx_int_parse_xpm (in /home/paulo/Programming/42/git/so_long/so_long)
+==60252==    by 0x11491F: mlx_xpm_file_to_image (in /home/paulo/Programming/42/git/so_long/so_long)
+==60252==    by 0x110283: load_image (mlx_init_load_clean.c:59)
+==60252==    by 0x110DC3: start_mlx_functions (so_long.c:18)
+==60252==    by 0x11104F: main (so_long.c:82)
+==60252== 
+==60252== LEAK SUMMARY:
+==60252==    definitely lost: 88 bytes in 1 blocks
+==60252==    indirectly lost: 136 bytes in 1 blocks
+==60252==      possibly lost: 0 bytes in 0 blocks
+==60252==    still reachable: 156,058 bytes in 1,634 blocks
+==60252==         suppressed: 0 bytes in 0 blocks
+==60252== Reachable blocks (those to which a pointer was found) are not shown.
+==60252== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==60252== 
+==60252== For lists of detected and suppressed errors, rerun with: -s
+==60252== ERROR SUMMARY: 10 errors from 10 contexts (suppressed: 1 from 1)

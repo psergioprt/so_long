@@ -114,12 +114,6 @@ void	display_player_lives(t_game *game)
 
 int	loop_hook(t_game *game)
 {
-	if (game->should_exit)
-	{
-		cleanup_mlx(game);
-		mem_free(&game->map, game->line_count, game);
-		exit(0);
-	}
 	mlx_clear_window(game->mlx, game->window);
 	render_game(game);
 	move_enemies(game);

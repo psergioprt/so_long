@@ -27,7 +27,7 @@ int	handle_items_and_exit(t_game *game)
 		if (game->items_collected == game->total_items)
 		{
 			ft_printf("Well done, you have completed the map\n");
-			game->should_exit = 1;
+			close_window(game);
 			return (0);
 		}
 		else

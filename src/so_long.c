@@ -14,6 +14,7 @@
 
 void	start_mlx_functions(t_game *game)
 {
+	init_game_player_images(game);
 	init_mlx(game);
 	load_image(game);
 	init_double_buffer(game);
@@ -71,11 +72,11 @@ int	main(int argc, char *argv[])
 	if (check_fd(fd) == 1)
 		return (1);
 	map_read(fd, &game.line_count, &game.max_line_length);
-	close (fd);
+	close(fd);
 	fd = open(argv[1], O_RDONLY);
 	start_map_mem_allocate(&game, fd);
 	add_print_lines(&game.map, fd);
-	close (fd);
+	close(fd);
 	init_handle_enemy_vars(&game);
 	if (start_validations(&game) != 0)
 		return (1);

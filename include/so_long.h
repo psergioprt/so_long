@@ -47,6 +47,14 @@ typedef struct s_enemy
 	int	direction;
 }	t_enemy;
 
+typedef struct s_player_image
+{
+	void *img_player_up;
+	void *img_player_down;
+	void *img_player_left;
+	void *img_player_right;
+}	t_player_image;
+
 typedef struct s_game
 {
 	int		line_count;
@@ -64,7 +72,6 @@ typedef struct s_game
 	void	*mlx;
 	void	*window;
 	char	**map;
-	int		should_exit;
 	int		player_x;
 	int		player_y;
 	int		total_items;
@@ -89,6 +96,7 @@ typedef struct s_game
 	int		tile_height;
 	int		prev_player_x;
 	int		prev_player_y;
+	t_player_image	*player_images;
 
 }	t_game;
 
@@ -138,5 +146,10 @@ void	cleanup_enemy_array(t_game *game);
 void	map_read(int fd, int *line_count, int *max_line_length);
 void	init_double_buffer(t_game *game);
 void	draw_tile_to_buffer(t_game *game, void *image, int x, int y);
+
+void	init_game_player_images(t_game *game);
+void	cleanup_player_images(t_game *game);
+void	free_game_resources(t_game *game);
+void	update_player_image(void *mlx, void **current_image, void *new_image);
 
 #endif

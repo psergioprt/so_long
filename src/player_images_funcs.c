@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mlx_init_load_clean.c                              :+:      :+:    :+:   */
+/*   player_images_funcs.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pauldos- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,21 +10,20 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "../include/so_long.h"
 
-int	close_window(t_game *game)
+void	output_clean_player_image_read_error(t_game *game)
 {
-	game->should_exit = 1;
-	cleanup_mlx(game);
-	mem_free(&game->map, game->line_count, game);
-	exit(0);
-	return (0);
+	ft_printf("Error\nFailed to load player image\n");
+	free_game_resources(game);
+	free(game->img_player);
+	exit(1);
 }
 
 static void	load_image_loading_fail_messages(t_game *game)
 {
 	if (!game->img_player || !game->img_wall || !game->img_item || \
-		!game->img_exit || !game->img_road)
+			!game->img_exit || !game->img_road || !game->img_enemy)
 	{
 		if (!game->img_player)
 			ft_printf("Error\nFailed to load player image\n");
@@ -38,16 +37,48 @@ static void	load_image_loading_fail_messages(t_game *game)
 			ft_printf("Error\nFailed to load road image\n");
 		if (!game->img_enemy)
 			ft_printf("Error\nFailed to load enemy image\n");
-		cleanup_mlx(game);
-		mem_free(&game->map, game->line_count, game);
+		free_game_resources(game);
+		free(game->img_player);
 		exit(1);
 	}
 }
 
+void	if_img_player_not_null(t_game *game)
+{
+	if (game->img_player)
+		mlx_destroy_image(game->mlx, game->img_player);
+}
+
+void	check_player_images(t_game *game)
+{
+	game->img_player = mlx_xpm_file_to_image(game->mlx, \
+			"./images/img_player_left.xpm", \
+			&game->img_width, &game->img_height);
+	if (!game->img_player)
+		output_clean_player_image_read_error(game);
+	if_img_player_not_null(game);
+	game->img_player = mlx_xpm_file_to_image(game->mlx, \
+			"./images/img_player_right.xpm", \
+			&game->img_width, &game->img_height);
+	if (!game->img_player)
+		output_clean_player_image_read_error(game);
+	if_img_player_not_null(game);
+	game->img_player = mlx_xpm_file_to_image(game->mlx, \
+			"./images/img_player_up.xpm", \
+			&game->img_width, &game->img_height);
+	if (!game->img_player)
+		output_clean_player_image_read_error(game);
+	if_img_player_not_null(game);
+	game->img_player = mlx_xpm_file_to_image(game->mlx, \
+			"./images/img_player_down.xpm", \
+			&game->img_width, &game->img_height);
+	if (!game->img_player)
+		output_clean_player_image_read_error(game);
+	if_img_player_not_null(game);
+}
+
 void	load_image(t_game *game)
 {
-	game->img_player = mlx_xpm_file_to_image(game->mlx, "./images/player.xpm", \
-	&game->img_width, &game->img_height);
 	game->img_wall = mlx_xpm_file_to_image(game->mlx, "./images/wall.xpm", \
 	&game->img_width, &game->img_height);
 	game->img_item = mlx_xpm_file_to_image(game->mlx, "./images/item.xpm", \
@@ -58,49 +89,9 @@ void	load_image(t_game *game)
 	&game->img_width, &game->img_height);
 	game->img_enemy = mlx_xpm_file_to_image(game->mlx, "./images/enemy.xpm", \
 	&game->img_width, &game->img_height);
+	check_player_images(game);
+	game->img_player = mlx_xpm_file_to_image(game->mlx, \
+			"./images/img_player_left.xpm", \
+			&game->img_width, &game->img_height);
 	load_image_loading_fail_messages(game);
-}
-
-void	cleanup_mlx(t_game *game)
-{
-	if (game->buffer)
-		mlx_destroy_image(game->mlx, game->buffer);
-	if (game->img_player)
-		mlx_destroy_image(game->mlx, game->img_player);
-	if (game->img_wall)
-		mlx_destroy_image(game->mlx, game->img_wall);
-	if (game->img_item)
-		mlx_destroy_image(game->mlx, game->img_item);
-	if (game->img_exit)
-		mlx_destroy_image(game->mlx, game->img_exit);
-	if (game->img_road)
-		mlx_destroy_image(game->mlx, game->img_road);
-	if (game->img_enemy)
-		mlx_destroy_image(game->mlx, game->img_enemy);
-	if (game->window)
-		mlx_destroy_window(game->mlx, game->window);
-	if (game->mlx)
-	{
-		mlx_destroy_display(game->mlx);
-		free(game->mlx);
-	}
-}
-
-void	init_mlx(t_game *game)
-{
-	game->mlx = mlx_init();
-	if (!game->mlx)
-	{
-		ft_printf("Error\nFailed to initialize MLX\n");
-		exit(1);
-	}
-	game->window = mlx_new_window(game->mlx, game->max_line_length * TILE_SIZE, \
-			game->line_count * TILE_SIZE, "so_long");
-	if (!game->window)
-	{
-		ft_printf("Error\nFailed to create window\n");
-		mlx_destroy_display(game->mlx);
-		free(game->mlx);
-		exit(1);
-	}
 }
