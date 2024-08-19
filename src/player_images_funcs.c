@@ -93,9 +93,4 @@ void	load_image(t_game *game)
 			IMG_PLAYER_DOWN, \
 			&game->img_width, &game->img_height);
 	load_image_loading_fail_messages(game);
-	ft_printf("img_height -> %d\n", game->img_height);
-	ft_printf("img_width -> %d\n", game->img_width);
-	ft_printf("TILE_SIZE -> %d\n", TILE_SIZE);
-	ft_printf("map length -> %d\n", game->max_line_length);
-	ft_printf("map line count -> %d\n", game->line_count);
 }

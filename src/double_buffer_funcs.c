@@ -21,32 +21,29 @@ void	init_double_buffer(t_game *game)
 		ft_printf("Error\nFailed to create double buffer\n");
 		exit (1);
 	}
+	game->img_endian = 0;
+	game->img_bits_per_pixel = 32;
 }
 
 void	draw_tile_to_buffer(t_game *game, void *image, int x, int y)
 {
 	char	*tile_data;
-	int		i;
-	int		j;
 	int		buffer_pos;
 	int		tile_pos;
+	int		img_line_length;
+	int		pos;
 
-	i = 0;
-	tile_data = mlx_get_data_addr(image, &game->img_width, &game->img_height, \
-			&game->img_endian);
-	while (i < TILE_SIZE)
+	pos = 0;
+	tile_data = mlx_get_data_addr(image, &game->img_bits_per_pixel, \
+	&img_line_length, &game->img_endian);
+	while (pos < TILE_SIZE * TILE_SIZE)
 	{
-		j = 0;
-		while (j < TILE_SIZE)
-		{
-			buffer_pos = ((y * TILE_SIZE + i) * game->img_line_length + \
-					(x * TILE_SIZE + j) * (game->img_bits_per_pixel / 8));
-			tile_pos = (i * game->img_width + j) * \
-				(game->img_bits_per_pixel / 8);
-			*(int *)(game->buffer_data + buffer_pos) = \
-					*(int *)(tile_data + tile_pos);
-			j++;
-		}
-		i++;
+		buffer_pos = ((y * TILE_SIZE + pos / TILE_SIZE) * game->img_line_length \
+		+ (x * TILE_SIZE + pos % TILE_SIZE) * (game->img_bits_per_pixel / 8));
+		tile_pos = (pos / TILE_SIZE * game->img_width + pos % TILE_SIZE) * \
+		(game->img_bits_per_pixel / 8);
+		*(int *)(game->buffer_data + buffer_pos) = *(int *)(tile_data + \
+		tile_pos);
+		pos++;
 	}
 }

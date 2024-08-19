@@ -32,12 +32,10 @@ void	init_game_struct_variables(t_game *game)
 	game->total_items = 0;
 	game->items_collected = 0;
 	game->move_count = 0;
-	game->new_x = game->player_x;
-	game->new_y = game->player_y;
+	game->new_x = 0;
+	game->new_y = 0;
 	game->buffer = NULL;
 	game->buffer_data = NULL;
 	game->img_width = TILE_SIZE;
 	game->img_height = TILE_SIZE;
-	game->img_endian = 0;
-	game->img_bits_per_pixel = 32;
 }
