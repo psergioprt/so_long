@@ -23,7 +23,7 @@
 # include "../util_funcs/get_next_line/get_next_line.h"
 # include "mlx.h"
 
-# define TILE_SIZE 32 
+# define TILE_SIZE 64 
 # define ESC 65307
 # define UP_ARROW 65362
 # define DOWN_ARROW 65364
@@ -55,6 +55,17 @@
 #  define ITEM "./images/item_48.xpm"
 #  define ENEMY "./images/enemy_48.xpm"
 #  define EXIT "./images/exit_48.xpm"
+# elif TILE_SIZE == 64
+#  define IMG_PLAYER_LEFT "./images/img_player_left_64.xpm"
+#  define IMG_PLAYER_RIGHT "./images/img_player_right_64.xpm"
+#  define IMG_PLAYER_UP "./images/img_player_up_64.xpm"
+#  define IMG_PLAYER_DOWN "./images/img_player_down_64.xpm"
+#  define WALL "./images/wall_64.xpm"
+#  define ROAD "./images/road_64.xpm"
+#  define ITEM "./images/item_64.xpm"
+#  define ENEMY "./images/enemy_64.xpm"
+#  define EXIT "./images/exit_64.xpm"
+
 # endif
 
 typedef struct s_enemy

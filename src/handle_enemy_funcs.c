@@ -40,7 +40,7 @@ void	init_handle_enemy_vars(t_game *game)
 
 	i = 0;
 	check_map_dimensions_enemies(game);
-	game->num_enemies = 3;
+	game->num_enemies = 7;
 	game->enemies = malloc(sizeof(t_enemy) * game->num_enemies);
 	if (!game->enemies)
 	{
