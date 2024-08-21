@@ -1,0 +1,8 @@
+So_long function explained
+
+1) First it checks in main whether the argc is not two (program + map file);
+2) Inits the function which has the game structure variables;
+3) Reads the file descriptor (map);
+4) Executes map_read (support_functions.c), where uses my get_next_line function. It define the line_count (row number) variable and max_line_lenght(length of each row) in a loop;
+
+

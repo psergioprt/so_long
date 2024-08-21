@@ -34,7 +34,7 @@ void	check_map_dimensions_enemies(t_game *game)
 	}
 }
 
-void	init_handle_enemy_vars(t_game *game)
+/*void	init_handle_enemy_vars(t_game *game)
 {
 	int	i;
 
@@ -59,7 +59,40 @@ void	init_handle_enemy_vars(t_game *game)
 		i++;
 	}
 	game->lives = 100;
+}*/
+
+void    init_handle_enemy_vars(t_game *game)
+{
+        int     i;
+
+        i = 0;
+        check_map_dimensions_enemies(game);
+        game->num_enemies = 7;
+        game->enemies = malloc(sizeof(t_enemy) * game->num_enemies);
+        if (!game->enemies)
+        {
+                ft_printf("Error\nMemory allocation for enemies failed\n");
+                mem_free(&game->map, game->line_count, game);
+                exit(1);
+        }
+        while (i < game->num_enemies)
+        {
+                do
+                {
+                    game->enemies[i].start_x = 1 + (rand() % (game->max_line_length - 2));
+                    game->enemies[i].start_y = 1 + (rand() % (game->line_count - 2));
+                }
+                while (game->map[game->enemies[i].start_y][game->enemies[i].start_x] != '0');
+                
+                game->enemies[i].enemy_x = game->enemies[i].start_x;
+                game->enemies[i].enemy_y = game->enemies[i].start_y;
+                game->enemies[i].speed = 1;
+                game->enemies[i].direction = rand() % 4;
+                i++;
+        }
+        game->lives = 100;
 }
+
 
 void	check_enemy_moves_direction_boundaries(t_game *game, int i)
 {
