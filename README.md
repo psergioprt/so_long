@@ -3,6 +3,10 @@
 #### So_long is a game developed in C as part of the 42 curriculum, utilizing the MLX Graphics library. This project adheres to the rigorous norms and requirements set by the school, providing an excellent opportunity to deepen my knowledge of the C programming language. It has been one of the most enjoyable projects I've worked on so far.
 Game Overview
 
+![so_long_800](https://github.com/user-attachments/assets/40b27264-ef03-47bc-a47e-1cbcec681432)
+
+![so_long_800](https://github.com/user-attachments/assets/40b27264-ef03-47bc-a47e-1cbcec681432)
+
 #### The game features a simple yet engaging concept. The player must navigate through a map that includes essential elements such as walls, pathways, collectables, a player character, and an exit. The objective is to collect all items and reach the exit without losing all of your life points.
 #### Key Features:
 
