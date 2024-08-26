@@ -20,6 +20,7 @@ void	check_map_dimensions_enemies(t_game *game)
 
 	min_rows = 5;
 	min_columns = 10;
+	game->enemies = NULL;
 	if (!game->map)
 	{
 		ft_printf("Error\nMap is NULL\n");
@@ -28,13 +29,14 @@ void	check_map_dimensions_enemies(t_game *game)
 	}
 	if (game->line_count < min_rows || game->max_line_length < min_columns)
 	{
-		ft_printf("Error\nMap dimensions are too small for enemies\n");
+		ft_printf("Error\nEither map is empty ");
+		ft_printf("or dimensions are too small for including enemies\n");
 		mem_free(&game->map, game->line_count, game);
 		exit(1);
 	}
 }
 
-/*void	init_handle_enemy_vars(t_game *game)
+void	init_handle_enemy_vars(t_game *game)
 {
 	int	i;
 
@@ -42,16 +44,18 @@ void	check_map_dimensions_enemies(t_game *game)
 	check_map_dimensions_enemies(game);
 	game->num_enemies = 7;
 	game->enemies = malloc(sizeof(t_enemy) * game->num_enemies);
-	if (!game->enemies)
-	{
-		ft_printf("Error\nMemory allocation for enemies failed\n");
-		mem_free(&game->map, game->line_count, game);
-		exit(1);
-	}
+	check_enemies_alloc(game);
 	while (i < game->num_enemies)
 	{
-		game->enemies[i].start_x = 1 + (rand() % (game->max_line_length - 2));
-		game->enemies[i].start_y = 1 + (rand() % (game->line_count - 2));
+		game->enemies[i].start_x = 1;
+		game->enemies[i].start_y = 1;
+		while (game->map[game->enemies[i].start_y][game->enemies[i].start_x] \
+			!= '0')
+		{
+			game->enemies[i].start_x = 1 + (rand() % (game->max_line_length \
+			- 2));
+			game->enemies[i].start_y = 1 + (rand() % (game->line_count - 2));
+		}
 		game->enemies[i].enemy_x = game->enemies[i].start_x;
 		game->enemies[i].enemy_y = game->enemies[i].start_y;
 		game->enemies[i].speed = 1;
@@ -59,40 +63,7 @@ void	check_map_dimensions_enemies(t_game *game)
 		i++;
 	}
 	game->lives = 100;
-}*/
-
-void    init_handle_enemy_vars(t_game *game)
-{
-        int     i;
-
-        i = 0;
-        check_map_dimensions_enemies(game);
-        game->num_enemies = 7;
-        game->enemies = malloc(sizeof(t_enemy) * game->num_enemies);
-        if (!game->enemies)
-        {
-                ft_printf("Error\nMemory allocation for enemies failed\n");
-                mem_free(&game->map, game->line_count, game);
-                exit(1);
-        }
-        while (i < game->num_enemies)
-        {
-                do
-                {
-                    game->enemies[i].start_x = 1 + (rand() % (game->max_line_length - 2));
-                    game->enemies[i].start_y = 1 + (rand() % (game->line_count - 2));
-                }
-                while (game->map[game->enemies[i].start_y][game->enemies[i].start_x] != '0');
-                
-                game->enemies[i].enemy_x = game->enemies[i].start_x;
-                game->enemies[i].enemy_y = game->enemies[i].start_y;
-                game->enemies[i].speed = 1;
-                game->enemies[i].direction = rand() % 4;
-                i++;
-        }
-        game->lives = 100;
 }
-
 
 void	check_enemy_moves_direction_boundaries(t_game *game, int i)
 {
@@ -107,7 +78,7 @@ void	check_enemy_moves_direction_boundaries(t_game *game, int i)
 	enemy_x = enemy->enemy_x;
 	speed = enemy->speed;
 	map = game->map;
-	if (rand() % 10 == 0 || map[enemy_y - speed][enemy_x] == '1' || \
+	if (rand() % 5 == 0 || map[enemy_y - speed][enemy_x] == '1' || \
 		map[enemy_y][enemy_x - speed] == '1' || map[enemy_y + speed][enemy_x] \
 		== '1' || map[enemy_y][enemy_x + speed] == '1')
 		enemy->direction = rand() % 4;

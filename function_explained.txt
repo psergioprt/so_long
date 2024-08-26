@@ -1,8 +1,189 @@
 So_long function explained
 
-1) First it checks in main whether the argc is not two (program + map file);
-2) Inits the function which has the game structure variables;
-3) Reads the file descriptor (map);
-4) Executes map_read (support_functions.c), where uses my get_next_line function. It define the line_count (row number) variable and max_line_lenght(length of each row) in a loop;
+1) First it checks in main whether the argc is or is not two (program + map file);
 
+2) Inits the function which has the game structure variables (init_game_struct_variables);
+
+3) Reads the file descriptor (map) and checks it;
+
+4) Calls map_read function (support_functions.c), which uses my get_next_line function. It defines the line_count (row number) variable and max_line_lenght(length of each row) variable in a loop;
+
+5) The function map_mem_allocate (support_functions.c) is executed, called by start_map_mem_allocate (so_long.c). As we already know how many rows and columns the map has, we can allocate memory for the map.
+
+6) Next, main function calls add_print_lines function (support_functions.c). This function uses get_next_line function to read all the map lines. Each map row index is filled with the content of each line read
+   by get_next_line. At the end, it prints out the content of each row (this part is not required by the project).
+
+7) Next in main, the bonus "enemy" variables are read in init_handle_enemy_vars function (handle_enemy_funcs.c). 
+   .Here in the first place, it calls the function check_map_dimensions(handle_enemy_funcs.c), where checks if it has the minimum rows and columns to handle "enemies". Some game structure variable are initialized
+    or assigned (min_rows, min_columns, game->enemies, game->num_enemies and game->lives). The needed size for enemies (t_enemy structure) is allocated.
+   .The way enemies are created in the first place, is it will loop enemies array number. Each enemy position is initialized to the position (x:1, y:1), and then in an inner loop, it checks if the enemy 
+    (map coordinate x, y)is being created at a position different than '0' (road). If it is not in the road, it keeps trying while it is in '0'. It defines the x and y enemy position, considering the x and y 1 
+    position added by random number of max_line_length and line_count, each subtracted of 2 (those 2 are the map limits, which are walls). When a enemy start position is defined, this value is assigned to the 
+    that enemy position. Another variable assigned to a value is speed, which is the amount of tiles moves in each movement (making it faster or slower). Each enemy movement will have a direction, which is 
+    calculated using rand function % 4 (one for each direction). The last variable declaration is life which starts at 100.
+
+8) Next, main in calling start_validations function (so_long.c) which calls validate_map function () and then if the map is valid, start_validations calls validate_reachability(check_reachability.c).
+
+8a) Validate_map (map_validator.c) - Its purpose is to check if map is rectangle (check_rectagle), if it is has no invalid characters (check_full_fill), check if it has the required element number 
+    (check_map_element) and checks wall if it is closed.
+
+8b) validate_reachability (check_reachability.c)
+    .This is the starting point to check whether items or exit are reachable or player is not blocked. This function first declares a variable f from t_flood_fill_vars structure, holds pointers to the map, its 
+     row and column size and visited grid. Init_visited function, will initially allocate memory for a 2D array at f->visited variable, and set all its 
+     values to 0 to start, meaning it hasn't been visited.
+    .Next, back to the validade_reachability function, the player start position is defined by the define_player_position function and the its coordinates are hold in game->player_x and game->player_y variables.
+    .Next, as we already have player position and each vars->visited set to 0, is time to search at the map if every position can be get by the player with flood_fill function. First it checks if x and y is out 
+     of bounds, if the map content in each coordinate is '1' (wall), or if flood fill has already been visited, if any of this cases are true, it returns without further recursion and runs the next recursive 
+     function to check the next position. It will run the recursive functions untill the position cannot be move on to any of the four positions.
+    .Next, in validate_reachability, checks whether player position is still 0. If it is, it means either 'P' is surrounded by walls and no movement was made or there was a posible movement to a direction, but 
+     not possible to come back to 'P' position and mark it as 1.
+    .The last line function call check_c_e_reachability, will check if all collectibles or exit are reachable by 'P'. Basically, it checks the map coordinates and if in that position there was or not a visit 
+     (if it is 1 or still 0).
+    .There is an outside function free_flood_mem(free_mem_reachability...c), which frees memory allocated from f->visited in case flag is 0 (In case 'P', 'C' and 'E' are are reachable). In case any of the 
+     elements are not reachable, the program will exit, but before f->visited, game->map and also the enemy_array memory must be freed, calling this function with flag = 1.
+
+9) The last function that is called in main is start_mlx_functions (so_long.c), which calls a few functions:
+
+   9a) init_game_player_images function (mlx_and_player_images_init_load_clean.c) - First it allocates and check the memory allocation for t_pl_im structure (abreviated from t_player_images, because of 
+       norminette indentation constraints at so_long.h when declaring this structure inside game structure). It initializes the four player images to NULL (one for each direction), ensuring the program doesn't 
+       access unitialized memory.
+
+   9b) init_mlx function (mlx_and_player_images_init_load_clean.c) - This function initializes the MiniLibX (MLX) graphics library. Its purpose is for creating windows and handling graphical elements in the game.
+       First is assigns to the game->mlx variable the result of mlx_init(). Is responsible for initializing the connection of the graphical system. If it doesn't initialize it exits. It it does, it assigns to 
+       the variable game->window the creation of a window, using mlx_new_window function, which will start the game->mlx variable, will calculate the window size, which will be the column and row number 
+       multiplied by TILE_SIZE, which is define at so_long header, and the title of the window. In case it doesn't create window, it calls the mlx_destroy_display(game->mlx) to clean up resources associated 
+       with 'mlx', frees its memory aswell and exits program.
+
+   9c) load_image function (player_images_funcs.c) - Function responsible for loading various game images (textures). It will assign to image variables, such as game->img_wall, an image by calling 
+       mlx_xpm_file_to_image function. This function reads the game->mlx, then the image path in xpm format, and finally the its size (height and width, getting its values from the pre-defined values of 
+       game->img_width and game->img_height). 
+       The player images are imported separately, because as it has a single variable to handle the player four positions, after each player image opening it was checked if there was any errors while reading it. 
+       If there was any error, it will call free_game_resources function (mlx_and_player_images_init_load_clean.c), frees img_player variable memory aswell and exits. In case it was successful it would destroy 
+       the image, before reading a new player image. If it reads successufully the four player images it moves on to read a game predefined player image to start the game. After that, the last actionof the 
+       load_image function will do, is to check if there was any errors reading the images other than player's. Is case of any error, it will free game resources and exit.
+
+       -> What free_game_resources does is to call cleanup_mlx function, which checks if images are not null, and destroy them. It include destroying game->buffer (this variable will be used in double buffer 
+          function, i'll explain more about it later), destroying the created window (game->window) and game-mlx by calling mlx_destroy_display and free this variable. Then it cleans player_images if 
+          game->player_images are not null. It clean the not null variables game->player->images->img_player_up, down, left and right variables calling the mlx_destroy_image function. It then frees the 
+          game->player_images and sets this last variable to NULL. The free_game_resources carries on by freeing both game->map and game->enemies if not null.
+
+   9d) init_double_buffer function (double_buffer_funcs.c) is now called. Double buffer mission is to prevent rendering all the entire map every time there is some player movement, or even some key touch or 
+       mouse movement, which could trigger rendering. The time is takes to render each frame directly to the screen, resulted in visible, partial updates. Without it there was lots of screen blinking / flickering
+       which was solved implementing double buffer. The double buffer solved this issue by rendering all updates to an off-screen image (the buffer) first). Once the entire frame is ready, it is then drawn to 
+       the screen in one go. It happens in a loop: render to the buffer, display the buffer and repeat. 
+       .The init_double_buffer function behavior: Using mlx_new_image, a new image is created, sized to match the window, it reads the game->mlx data and calculates the window size. It checks if it is correctly 
+        created. It initiates img_endian (endianess)variable to 0, which is typically the default, especially for x86 architectures. A value of '0' usually means that the image dara is stored in little-endian 
+        format (least significant byte first). It initiates the img_bits_per_pixel value 32, so it will use 32 bits (4 bytes) for each pixel, for color information.
+
+   9e) The next function the program will read at start_mlx_functions, is mlx_key_hook, which is a MLX function, that handles keyboard input for the game. It listens for key events within the specified window 
+       and passes control to the update_map_moves (mlx_render_hook_keys.c) whenever a key is pressed.This function will then processs the key input and update the game state accordingly.
+
+       -> update map_moves function (mlx_render_hook_keys.c) 
+          In this function, two key input functions are called: 
+          - window_esc_key_press (escape_and_close_window.c) - This function is triggered when ESC key is pressed, which calls a new function exit window just after freeing game resources.
+          - cursor_move_key_press (move_player_key_define.c) - Defines the player movements when keys are pressed. It moves accordingly to UP, DOWN, LEFT or RIGHT, using the defined cursor and WASD key. It calls 
+            four functions which are move_player_left, right, etc. These functions check if the direction the player will take, won't make the player get out of bounds or encounters a wall. If if doesn't, it will
+            move the player one position towards the chosen direction. It then creates a new image using mlx_xpm_file_to_image function. If img_player is already defined, it is destroyed before the new_image is 
+            assigned to img_player. 
+          - This function starts by defining a current element and setting a previous element (the TILE the player is moving from)to '0', whose purpose is to update the image that is shown in the previous player
+            position, after player has moved into a new position. 
+            game->new_x and y will be assigned the values of game->player_x and y respectively. new_x and y, will be the potential new position of the player and game->player_x and y will be the current position
+            before the move is confirmed. 
+          - It enters an if clause that will hold the rest of the function. It is checked if the new_x or y are different from player_x or y, which means player has moved. The cur_element will be the image from
+            the map player new position coordinate. The following line has a function handle_items_and_exit (at the same c file), which based on the cur_element, it is going to check whether it is 'C', in this
+            case it will update the item_colected value. If cur_element is 'E' it checks whether player has collected all items, if it exits the game, if it hasn't, game will continue. This function has variable
+            move_count, that will increase one value for each movement (this is required by the project subject).
+          - Back to update_map_moves in the if clause, next we have the assignement of 'P' to the map new player position. The previous position (player_y and x), will be assigned to the prev_element value and 
+            then player_x and y (previous position) are assigned again to new_x and y (new position).
+          - We have a new if clause to check which is the cur_element, it is assigned to prev_element '0' in case cur_element are 'C' or '0'. Because if it is '0' it will still be '0', if it is 'C', the item will
+            be collected by the player, and it will have to be changed to '0'. Anything else 'E', will keep being 'E'.
+          - The last line calls check_player_lives (handle_enemy_funcs.c) - It is a loop that iterates the defined number of enemies, to check if at any moment the player and an enemy are at the same map coordinate. If they are, 10 points of life are deducted from 100, if lives get to 0 or less, the game exits, after all the memory allocation and images opened are freed or destroyed.
+
+   9f) Back to start_mlx_function, the next function is mlx_hook, whose purpose is handle events like closing the window when the window 'X' button is clicked. It has five arguments, first reads the game window 
+       where the event occurs. The second argument is event code DESTROY_NOTIFY whose value is 17 which is the event triggered when the window is about to be destroyed. The third argument is set to 0(no mask).
+       The fourth argument is to call close_window function and free resources, and the last argument is a pointer to the data to pass to the function.
+
+   9g) The next function in start_mlx_functions is mlx_loop_hook. It continuously updates the game's state and rendering. It essentially sets up a loop that runs throughout the game's execution, repeatedly 
+       calling a function (loop_hook) to handle rendering and other tasks. This loop ensures that the game screen is refreshed and any necessary updates are made, such as moving objects or updating player's 
+       position. Additionally it can handle display text or updating the HUD (heads-up display) on the screen.
+
+       ->The loop_hook function (window_put_image_and_text.c), first starts by calling mlx_clear_window, to clear and refresh the display of the game. 
+       ->Then, it loads render_game function (mlx_render_hook_keys.c). At render_game function begining, the variable buffer_data is assign to the result of mlx_get_data_addr. This is a MLX function for 
+         accessing and manipulating the pixel data of an image created with 'mlx_new_image'. This function retrives the address of the first byte of the image's data buffer. It also returns some other important
+         information about the image's format. 
+         - It has four arguments: 
+            1) game->buffer -> Off-screen buffer where the game will render graphics before displaying them in the screen. 
+            2) &game->img_bits_per_pixel -> This is a pointer to an integer where 'mlx_get_data_addr' will store the number of bits used to represent a single pixel in the image. Typically, 32 bits (4 bytes),
+               which is the case. 
+            3) &game->img_line_length -> Pointer to an integer where the function will store the length of a line in bytes. 
+            4) &game->img_endian -> Value is 0, so data will be stored in little-endian format (least significant byte first). Bytes are stored as last bytes first.
+
+         - render_game function starts a loop across all the map lines and columns, it calls render_game_support_lines where each game map coordinate (tile), based on on its content, '1', '0', 'P' etc, will call
+           the function draw tile_to_buffer at the x, y coordinates.
+         - After the game map loop is complete, the function will move on, to do the same with render_enemy function, where across the enemies number loop, it will use the draw_tile_to_buffer (double_buffer_funcs.c)
+           aswell to draw enemies images to buffer.
+
+         - draw_tile_to_buffer (double_buffer_funcs.c) is responsible for copying a tile image to a specific place within a larger image buffer, which represents the entire game screen. This process renders each
+           tile in the correct position on the screen. It has three arguments:
+           1) game -> A pointer to the game structure which contains all data related to game;
+           2) image -> A pointer to the tile image that will be drawn onto the buffer;
+           3) x, y -> The coordinates (in tiles) where this tile should be drawn in the screen.
+
+           Variables:
+                     tile_data -> A pointer to the raw pixel data of the tile image;
+                     buffer_pos -> The position in the screen buffer where the pixel data should be copied;
+                     tile_pos -> The position in the tile image where the pixel data is taken from (retrieves color data from a pixel)
+                     img_line_length -> The length of a single line of the image in bytes (all the width the buffer line);
+                     pos: A loop counter that iterates over each pixel in the tile.
+
+          tile_data = mlx_get_data_addr(image, &game->img_bits_per_pixel, &img_line_length, &game->img_endian);
+          This line retrieves the memory address of the raw pixel data for the image (the tile to be drawn), fills the details like bits per pixel, line length and endian setting.
+
+          - First a local variable 'pos' is initialized to 0. This variable will be used to loop all the TILE bits, for e.g. if a TILE is 32x32, it will loop 1024 times (1024 bits). Inside that loop will be
+            defined another two local variables values, buffer_pos and tile_pos.
+
+            1) buffer_pos = ((y * TILE_SIZE + pos / TILE_SIZE) * game->img_line_length + (x * TILE_SIZE + pos % TILE_SIZE) * (game->img_bits_per_pixel / 8));
+               - buffer_pos calculates the exact position top-left corner in the buffer where the pixel from the tile should be placed.
+                 e.g. for explaining this equation: TILE_SIZE = 32, map coordinates (y:3 x:2) (remember y and x start from 0 index), pos = 5 [the 5th pixel of the tile (which has 32x32 = 1024 pixels)], 
+                      img_line_length: For instance 1024 bytes (random number), img_bits_per_pixel: 32 (which is 4 bytes per pixel).
+                      buffer_pos = [(2 x 32 = 64) + (5 / 32 = 0)] * 1024 + [(3 x 32 = 96) + (5 % 32 = 5)] * (32 / 8 = 4)
+                      buffer_pos = 64 * 1024 * 404
+                      buffer_pos is the pixel in the Y axis 64th pixel (row #64) - top of third tile, then the buffer row length is 1024 bytes, and the X axys is the 404th byte located at the 1024 bytes length row.
+                      (5 / 32 = 0) means it pixel is at the first tile row, and (5 % 32 = 5) means pixel is at the 6th tile column. 
+            2) tile_pos = (pos / TILE_SIZE * game->img_width + (pos % TILE_SIZE) * (game->img_bits_per_pixel / 8);
+               - tile_pos calculates the exact position of the pixel which retrives the color data from the tile.
+                 e.g. The same data as buffer_pos
+                      tile_pos = (5 / 32) * 32 pixels + (5 % 32) * (32 / 8) = 0 * 32 + 5 * 4bytes
+                      Pixel to be retrieved is at the tile 1st row and at the 6th column
+	  Now that we have the exact location of the pixel tile data to retrive and the exact location of the pixel to copy that information to, it's time to copy that information to the destiny as follows:
+          *(int *)(game->buffer_data + buffer_pos) = *(int *)(tile_data + tile_pos);
+         
+       ->Now, the next function loop_look will load is 'move_enemies' (handle_enemy_funcs.c).
+           This function uses time function clock() and constant CLOCKS_PER_SEC from time.h and rand() from stdlib.h header files.
+             - clock() - This function returns the current processor time used by the program in clock ticks. It is used to measure intervals.
+             - CLOCKS_PER_SEC - This constant defines the number of clock ticks per second and is used to convert the clock ticks returned by clock() into seconds.
+             - rand() - Is a random number generator (RAND_MAX - usually is 32767 - depends on the system). But, if used with modulus e.g. rand() % 4, generates 4 random numbers from 0 to 3.
+           Local variables used:
+             - static clock_t last_move_time = 0 -> It is static so its value can be updated during the program execution, it is used to calculate the amount of time has passed since the last program call.
+               Starts at 0, but in the function this value will be eventually updated to the value of current_time.
+             - clock_t current_time = clock() ->  During the program execution current_time value, will be updated to the increment of all clock() calls. In a call it can be 100, and in the next it has to be at
+               least the same number, but it should increase.
+             - const double move_interval = 0.5 -> It is a constant value that will define the least time (0.5 seconds) the program should wait untill there is a new enemy movement.
+             - double elapsed time = (double)(current_time - last_move_time) / CLOCKS_PER_SEC -> This will be the elapsed time that has passed since the last enemy movement.
+               An example to explain with made up values: On the 100th clock() call its incremented value is 500, so current_time is 500. A few lines later, 'last_move_time' is assigned to current_time value (500),
+               the next time clock() is called, its value will increase to a new value, lets say 520. Lets use the value 1000 for CLOCKS_PER_SEC.
+               The formula will now calculate the elapsed time (520 - 500) / 1000 = 0.02. This(made up value) is the elapsed time in seconds, from the last enemy movement, which is less than move_interval value.
+           After the formula, an if clause checks if elapsed time is less than move_interval, in case it is, it will return earlier, and clock() will be called again updating current_time, until time_elapsed
+             value is at least the same as last_time_move, and therefore the enemies move again.
+           Now, after the last_time_move has been updated, it loops all the enemies and call a new function check_enemy_moves_direction_boundaries (handle_enemies.c) to define the direction of the enemies.
+               Basically this function begins an if clause that tells enemies to move towards a direction from four possible directions (rand() % 4) if the speed (default value is one, which means for each
+                movement enemy moves one tile) does not move towards wall or number random generator is not 0 (rand() % 5) which has 20% hipotesis the number generated is 0.
+               If enemies do start moving, the number generated from the rand() % 4, if it is '0' it moves UP, '1' moves DOWN, '2' moves left and '3' moves right.
+          
+
+
+
+
+
+                    
 

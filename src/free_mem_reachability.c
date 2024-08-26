@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_reachability.c                               :+:      :+:    :+:   */
+/*   free_mem_reachability_check_enemies_alloc.c        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pauldos- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -35,5 +35,15 @@ void	free_flood_mem(t_game *game, t_flood_fill_vars *f, int *flag)
 		while (i < f->rows)
 			free(f->visited[i++]);
 		free(f->visited);
+	}
+}
+
+void	check_enemies_alloc(t_game *game)
+{
+	if (!game->enemies)
+	{
+		ft_printf("Error\nMemory allocation for enemies failed\n");
+		mem_free(&game->map, game->line_count, game);
+		exit (1);
 	}
 }

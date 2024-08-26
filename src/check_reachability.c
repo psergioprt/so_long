@@ -108,7 +108,7 @@ void	validate_reachability(t_game *game)
 	flood_fill(&f, game->player_x, game->player_y);
 	if (f.visited[game->player_x][game->player_y] == 0)
 	{
-		ft_printf("Error\nPlayer 'P' is surrounded by walls\n");
+		ft_printf("Error\nPlayer 'P' is either surrounded by walls or trapped\n");
 		flag = 1;
 		free_flood_mem(game, &f, &flag);
 	}

@@ -173,12 +173,12 @@ void	cursor_move_key_press(int keycode, t_game *game);
 int		window_esc_key_press(int keycode, t_game *game);
 void	init_handle_enemy_vars(t_game *game);
 void	move_enemies(t_game *game);
+void	check_enemies_alloc(t_game *game);
 void	check_player_lives(t_game *game);
 void	cleanup_enemy_array(t_game *game);
 void	map_read(int fd, int *line_count, int *max_line_length);
 void	init_double_buffer(t_game *game);
 void	draw_tile_to_buffer(t_game *game, void *image, int x, int y);
-
 void	init_game_player_images(t_game *game);
 void	cleanup_player_images(t_game *game);
 void	free_game_resources(t_game *game);

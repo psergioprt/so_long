@@ -76,7 +76,6 @@ int	main(int argc, char *argv[])
 	fd = open(argv[1], O_RDONLY);
 	start_map_mem_allocate(&game, fd);
 	add_print_lines(&game.map, fd);
-	close(fd);
 	init_handle_enemy_vars(&game);
 	if (start_validations(&game) != 0)
 		return (1);
