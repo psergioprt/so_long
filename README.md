@@ -6,7 +6,7 @@
 
 #### Game Overview
 
-#### The game features a simple yet engaging concept. The player must navigate through a map that includes essential elements such as walls, pathways, collectables, a player character, and an exit. The objective is to collect all items and reach the exit without losing all of your life points.
+##### The game features a simple yet engaging concept. The player must navigate through a map that includes essential elements such as walls, pathways, collectables, a player character, and an exit. The objective is to collect all items and reach the exit without losing all of your life points.
 #### Key Features:
 
 ##### ▶️ Dynamic Map Reading: The game reads a predefined map that includes walls, pathways, collectables, and an exit.
@@ -17,7 +17,7 @@
 ##### ▶️ On-Screen Information: The player can see their movement count, the number of collectables left, and their current life percentage. The player can only exit the game after collecting all items.
 ##### ▶️ Game Rendering: To prevent flickering during gameplay—caused by key presses, mouse movements, or other actions—double buffer rendering has been implemented. Instead of rendering directly to the screen, the game first renders to a buffer. Once complete, the entire image is then displayed on the screen at once. This technique ensures smooth and flicker-free visuals, enhancing the overall gaming experience.
 
-###### This project has been a fantastic experience, allowing me to blend creativity with technical skills while adhering to the educational standards of 42.
+##### This project has been a fantastic experience, allowing me to blend creativity with technical skills while adhering to the educational standards of 42.
 
 # So_long - Functions explained
 
@@ -68,20 +68,20 @@
 
 #### ➡️ 9e) The next function the program will read in start_mlx_functions is mlx_key_hook, an MLX function that handles keyboard input for the game. It listens for key events within the specified window and passes control to update_map_moves (mlx_render_hook_keys.c) whenever a key is pressed. This function then processes the key input and updates the game state accordingly.
 
-#### ➡ update_map_moves function (mlx_render_hook_keys.c)
-#### ➡ window_esc_key_press (escape_and_close_window.c): This function is triggered when the ESC key is pressed, which calls a new function to exit the window after freeing game resources.
-#### ➡ cursor_move_key_press (move_player_key_define.c): This function defines the player’s movements when keys are pressed. The player moves according to the UP, DOWN, LEFT, or RIGHT keys using either the arrow keys or the WASD keys. It calls four functions—move_player_left, move_player_right, etc.—which check if the player’s intended direction is within bounds and not obstructed by a wall. If the move is valid, the player moves one position in the chosen direction. The function then creates a new image using the mlx_xpm_file_to_image function. If img_player is already defined, it is destroyed before the new image is assigned to img_player.
-#### ➡ The function begins by defining the current element and setting the previous element (the TILE the player is moving from) to '0'. This is to update the image shown at the player's previous position after they move to a new position.
-#### ➡ game->new_x and game->new_y are assigned the values of game->player_x and game->player_y, respectively. new_x and new_y represent the potential new position of the player, while game->player_x and game->player_y represent the current position before the move is confirmed.
-#### ➡ The function then enters an if clause that governs the rest of its behavior. It checks if new_x or new_y are different from player_x or player_y, indicating that the player has moved. The cur_element variable represents the map image at the player’s new position coordinates. The next line calls the handle_items_and_exit function (in the same C file), which checks the value of cur_element. If cur_element is 'C', it updates the item_collected value. If cur_element is 'E', the function checks whether the player has collected all items; if so, the game exits. If not, the game continues. The function also increments the move_count variable by one for each movement, as required by the project specifications.
-#### ➡ Returning to update_map_moves in the if clause, the player's new position on the map is assigned the value 'P'. The previous position (player_y and player_x) is assigned to prev_element, and then player_x and player_y (the previous positions) are updated to new_x and new_y (the new positions).
-#### ➡ A new if clause checks the value of cur_element. If cur_element is 'C' or '0', prev_element is assigned the value '0'. If cur_element is '0', it remains '0'; if it is 'C', the item is collected by the player and must be changed to '0'. If cur_element is 'E', it remains 'E'.
-#### ➡ The last line of the function calls check_player_lives (handle_enemy_funcs.c). This function loops through the defined number of enemies to check if, at any point, the player and an enemy occupy the same map coordinates. If they do, 10 points are deducted from the player’s total of 100. If the player’s life points reach 0 or less, the game exits after freeing or destroying all allocated memory and opened images.
+###### ➡ update_map_moves function (mlx_render_hook_keys.c)
+###### ➡ window_esc_key_press (escape_and_close_window.c): This function is triggered when the ESC key is pressed, which calls a new function to exit the window after freeing game resources.
+###### ➡ cursor_move_key_press (move_player_key_define.c): This function defines the player’s movements when keys are pressed. The player moves according to the UP, DOWN, LEFT, or RIGHT keys using either the arrow keys or the WASD keys. It calls four functions—move_player_left, move_player_right, etc.—which check if the player’s intended direction is within bounds and not obstructed by a wall. If the move is valid, the player moves one position in the chosen direction. The function then creates a new image using the mlx_xpm_file_to_image function. If img_player is already defined, it is destroyed before the new image is assigned to img_player.
+###### ➡ The function begins by defining the current element and setting the previous element (the TILE the player is moving from) to '0'. This is to update the image shown at the player's previous position after they move to a new position.
+###### ➡ game->new_x and game->new_y are assigned the values of game->player_x and game->player_y, respectively. new_x and new_y represent the potential new position of the player, while game->player_x and game->player_y represent the current position before the move is confirmed.
+###### ➡ The function then enters an if clause that governs the rest of its behavior. It checks if new_x or new_y are different from player_x or player_y, indicating that the player has moved. The cur_element variable represents the map image at the player’s new position coordinates. The next line calls the handle_items_and_exit function (in the same C file), which checks the value of cur_element. If cur_element is 'C', it updates the item_collected value. If cur_element is 'E', the function checks whether the player has collected all items; if so, the game exits. If not, the game continues. The function also increments the move_count variable by one for each movement, as required by the project specifications.
+###### ➡ Returning to update_map_moves in the if clause, the player's new position on the map is assigned the value 'P'. The previous position (player_y and player_x) is assigned to prev_element, and then player_x and player_y (the previous positions) are updated to new_x and new_y (the new positions).
+###### ➡ A new if clause checks the value of cur_element. If cur_element is 'C' or '0', prev_element is assigned the value '0'. If cur_element is '0', it remains '0'; if it is 'C', the item is collected by the player and must be changed to '0'. If cur_element is 'E', it remains 'E'.
+###### ➡ The last line of the function calls check_player_lives (handle_enemy_funcs.c). This function loops through the defined number of enemies to check if, at any point, the player and an enemy occupy the same map coordinates. If they do, 10 points are deducted from the player’s total of 100. If the player’s life points reach 0 or less, the game exits after freeing or destroying all allocated memory and opened images.
 
 #### ▶️ 9f) Back in start_mlx_functions, the next function is mlx_hook, which handles events like closing the window when the 'X' button is clicked. This function has five arguments:
 
-#### ▶ The first argument specifies the game window where the event occurs.
-#### ▶ The second argument is the event code DESTROY_NOTIFY, which has a value of 17 and is triggered when the window is about to be destroyed.
-#### ▶ The third argument is set to 0 (no mask).
-#### ▶ The fourth argument calls the close_window function to free resources.
-    The final argument is a pointer to the data passed to the function.
+###### ▶ The first argument specifies the game window where the event occurs.
+###### ▶ The second argument is the event code DESTROY_NOTIFY, which has a value of 17 and is triggered when the window is about to be destroyed.
+###### ▶ The third argument is set to 0 (no mask).
+###### ▶ The fourth argument calls the close_window function to free resources.
+###### ▶ The final argument is a pointer to the data passed to the function.
