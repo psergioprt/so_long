@@ -85,3 +85,72 @@
 ###### ➡ The third argument is set to 0 (no mask).
 ###### ➡ The fourth argument calls the close_window function to free resources.
 ###### ➡ The final argument is a pointer to the data passed to the function.
+
+#### ➡️ 9g) The next function in start_mlx_functions is mlx_loop_hook, which continuously updates the game's state and rendering. It essentially sets up a loop that runs throughout the game's execution, repeatedly calling a function (loop_hook) to handle rendering and other tasks. This loop ensures that the game screen is refreshed and any necessary updates are made, such as moving objects or updating the player's position. Additionally, it can handle displaying text or updating the HUD (heads-up display) on the screen.
+
+###### ➡ The loop_hook function (window_put_image_and_text.c)
+
+###### ➡ The function begins by calling mlx_clear_window, which clears and refreshes the display of the game.
+
+###### ➡ Next, it loads the render_game function (mlx_render_hook_keys.c). At the beginning of the render_game function, the variable buffer_data is assigned the result of mlx_get_data_addr. This is an MLX function for accessing and manipulating the pixel data of an image created with mlx_new_image. This function retrieves the address of the first byte of the image's data buffer, along with other important information about the image's format.
+##### ➡ Arguments:
+###### ➡ game->buffer: Off-screen buffer where the game will render graphics before displaying them on the screen.
+###### ➡ &game->img_bits_per_pixel: A pointer to an integer where mlx_get_data_addr will store the number of bits used to represent a single pixel in the image. Typically, this is 32 bits (4 bytes).
+###### ➡ &game->img_line_length: A pointer to an integer where the function will store the length of a line in bytes.
+###### ➡ &game->img_endian: A value of 0 indicates that the data will be stored in little-endian format (least significant byte first).
+
+###### ➡ The render_game function then loops across all the map's lines and columns, calling render_game_support_lines. Based on the content of each game map coordinate (tile), such as '1', '0', 'P', etc., it will call the function draw_tile_to_buffer at the appropriate x, y coordinates.
+
+###### ➡ After completing the game map loop, the function proceeds to do the same with the render_enemy function. It loops through the number of enemies and uses draw_tile_to_buffer (double_buffer_funcs.c) to draw enemy images to the buffer.
+
+##### ➡ draw_tile_to_buffer (double_buffer_funcs.c) is responsible for copying a tile image to a specific location within a larger image buffer, representing the entire game screen. This process renders each tile in the correct position on the screen. It has three arguments:
+###### ➡ game: A pointer to the game structure containing all data related to the game.
+###### ➡ image: A pointer to the tile image that will be drawn onto the buffer.
+###### ➡ x, y: The coordinates (in tiles) where this tile should be drawn on the screen.
+
+##### ➡ Variables:
+###### ➡ tile_data: A pointer to the raw pixel data of the tile image.
+###### ➡ buffer_pos: The position in the screen buffer where the pixel data should be copied.
+###### ➡ tile_pos: The position in the tile image where the pixel data is taken from (retrieves color data from a pixel).
+###### ➡ img_line_length: The length of a single line of the image in bytes (width of the buffer line).
+###### ➡ pos: A loop counter that iterates over each pixel in the tile.
+
+###### ➡ The line tile_data = mlx_get_data_addr(image, &game->img_bits_per_pixel, &img_line_length, &game->img_endian) retrieves the memory address of the raw pixel data for the image (the tile to be drawn) and fills in details like bits per pixel, line length, and endian settings.
+
+##### ➡ A local variable pos is initialized to 0. This variable is used to loop through all the TILE bits. For example, if a TILE is 32x32, it will loop 1024 times (1024 bits). Inside this loop, two more local variables are defined: buffer_pos and tile_pos.
+###### ➡ buffer_pos: buffer_pos = ((y * TILE_SIZE + pos / TILE_SIZE) * game->img_line_length + (x * TILE_SIZE + pos % TILE_SIZE) * (game->img_bits_per_pixel / 8));
+###### ➡ This calculates the exact top-left corner position in the buffer where the pixel from the tile should be placed.
+###### ➡ tile_pos: tile_pos = (pos / TILE_SIZE) * game->img_width + (pos % TILE_SIZE) * (game->img_bits_per_pixel / 8);
+###### ➡ This calculates the exact position of the pixel that retrieves the color data from the tile.
+
+###### ➡ Now that the exact locations of the pixel data to retrieve and where to copy it to are known, the data is copied using: *(int *)(game->buffer_data + buffer_pos) = *(int *)(tile_data + tile_pos);
+
+##### ➡ Next, loop_hook loads the move_enemies function (handle_enemy_funcs.c).
+##### ➡ This function uses the clock() function and the constant CLOCKS_PER_SEC from time.h, along with rand() from the stdlib.h header file.
+###### ➡ clock(): Returns the current processor time used by the program in clock ticks. It is used to measure intervals.
+###### ➡ CLOCKS_PER_SEC: This constant defines the number of clock ticks per second and is used to convert the clock ticks returned by clock() into seconds.
+###### ➡ rand(): Generates a random number. If used with a modulus (e.g., rand() % 4), it generates a random number between 0 and 3.
+##### ➡ Local variables:
+
+###### ➡ static clock_t last_move_time = 0: A static variable to retain its value between function calls, used to calculate the time passed since the last enemy movement. It starts at 0 but will be updated to current_time during the function execution.
+
+###### ➡ clock_t current_time = clock(): This updates during the program's execution to reflect the current time in clock ticks.
+
+###### ➡ const double move_interval = 0.5: A constant value defining the minimum time interval (0.5 seconds) between enemy movements.
+
+###### ➡ double elapsed_time = (double)(current_time - last_move_time) / CLOCKS_PER_SEC: This calculates the time elapsed since the last enemy movement.
+
+###### ➡ After calculating elapsed_time, an if clause checks if elapsed_time is less than move_interval. If it is, the function returns early, and clock() is called again to update current_time until elapsed_time meets or exceeds move_interval, allowing the enemies to move again.
+
+###### ➡ After updating last_move_time, the function loops through all enemies and calls check_enemy_moves_direction_boundaries (handle_enemies.c) to determine the enemies' direction.
+###### ➡ This function checks if the enemies should move in one of four possible directions (rand() % 4). It ensures the enemy doesn’t move into a wall and has a 20% chance of staying still (rand() % 5). If the enemy moves, rand() % 4 determines the direction: '0' for UP, '1' for DOWN, '2' for LEFT, and '3' for RIGHT. The enemies' positions are then updated with the new positions defined in the previous if clauses.
+
+##### ➡ The next functions loop_hook loads are display_move_count, display_items_collected, and display_player_lives (window_put_image_and_text.c).
+###### ➡ These functions are similar in purpose: they display text information on the screen, such as movement count, collected items, and player lives.
+##### ➡ display_move_count:
+###### ➡ It begins by creating a variable rectangle of type t_draw_shape for drawing the background, with sub-variables for color, width, and height.
+###### ➡ A string is created to hold the value of game->move_count, converted to a string using the ft_itoa function. Variables x and y handle the shape and text positions on the screen, with defined text and rectangle colors and rectangle size.
+##### ➡ The draw_rectangle function is called, which uses mlx_pixel_put to create a rectangle at the specified position on the screen.
+###### ➡ For example, if x = 30 and width = 80, the rectangle spans from pixel 25 to pixel 105 on the x-axis. Similarly, if y = 20 and height = 20, the rectangle spans from pixel 5 to pixel 25 on the y-axis.
+###### ➡ After drawing the rectangle, the string is placed inside it on the screen using the mlx_string_put function, which displays the text at the specified x, y position with the defined color and content.
+
