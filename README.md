@@ -78,10 +78,10 @@
 ###### ➡ A new if clause checks the value of cur_element. If cur_element is 'C' or '0', prev_element is assigned the value '0'. If cur_element is '0', it remains '0'; if it is 'C', the item is collected by the player and must be changed to '0'. If cur_element is 'E', it remains 'E'.
 ###### ➡ The last line of the function calls check_player_lives (handle_enemy_funcs.c). This function loops through the defined number of enemies to check if, at any point, the player and an enemy occupy the same map coordinates. If they do, 10 points are deducted from the player’s total of 100. If the player’s life points reach 0 or less, the game exits after freeing or destroying all allocated memory and opened images.
 
-#### ▶️ 9f) Back in start_mlx_functions, the next function is mlx_hook, which handles events like closing the window when the 'X' button is clicked. This function has five arguments:
+#### ➡️ 9f) Back in start_mlx_functions, the next function is mlx_hook, which handles events like closing the window when the 'X' button is clicked. This function has five arguments:
 
-###### ▶ The first argument specifies the game window where the event occurs.
-###### ▶ The second argument is the event code DESTROY_NOTIFY, which has a value of 17 and is triggered when the window is about to be destroyed.
-###### ▶ The third argument is set to 0 (no mask).
-###### ▶ The fourth argument calls the close_window function to free resources.
-###### ▶ The final argument is a pointer to the data passed to the function.
+###### ➡ The first argument specifies the game window where the event occurs.
+###### ➡ The second argument is the event code DESTROY_NOTIFY, which has a value of 17 and is triggered when the window is about to be destroyed.
+###### ➡ The third argument is set to 0 (no mask).
+###### ➡ The fourth argument calls the close_window function to free resources.
+###### ➡ The final argument is a pointer to the data passed to the function.
