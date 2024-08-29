@@ -10,10 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/so_long.h"
-#include <time.h>
+#include "../include_bonus/so_long_bonus.h"
 
-/*void	check_map_dimensions_enemies(t_game *game)
+void	check_map_dimensions_enemies(t_game *game)
 {
 	int	min_rows;
 	int	min_columns;
@@ -34,9 +33,9 @@
 		mem_free(&game->map, game->line_count, game);
 		exit(1);
 	}
-}*/
+}
 
-/*void	init_handle_enemy_vars(t_game *game)
+void	init_handle_enemy_vars(t_game *game)
 {
 	int	i;
 
@@ -63,9 +62,9 @@
 		i++;
 	}
 	game->lives = 100;
-}*/
+}
 
-/*void	check_enemy_moves_direction_boundaries(t_game *game, int i)
+void	check_enemy_moves_direction_boundaries(t_game *game, int i)
 {
 	t_enemy	*enemy;
 	int		enemy_y;
@@ -92,9 +91,9 @@
 		enemy_x += speed;
 	enemy->enemy_x = enemy_x;
 	enemy->enemy_y = enemy_y;
-}*/
+}
 
-/*void	move_enemies(t_game *game)
+void	move_enemies(t_game *game)
 {
 	static clock_t	last_move_time = 0;
 	clock_t			current_time;
@@ -114,9 +113,9 @@
 		i++;
 	}
 	check_player_lives(game);
-}*/
+}
 
-/*void	check_player_lives(t_game *game)
+void	check_player_lives(t_game *game)
 {
 	int	i;
 
@@ -140,4 +139,4 @@
 		}
 		i++;
 	}
-}*/
+}

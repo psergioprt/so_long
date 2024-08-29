@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/so_long.h"
+#include "../include_bonus/so_long_bonus.h"
 
 void	map_read(int fd, int *line_count, int *max_line_length)
 {
@@ -34,6 +34,7 @@ void	map_read(int fd, int *line_count, int *max_line_length)
 void	add_print_lines(char ***map, int fd)
 {
 	int		row;
+	int		i;
 	char	*line;
 
 	row = 0;
@@ -46,9 +47,24 @@ void	add_print_lines(char ***map, int fd)
 		row++;
 	}
 	close(fd);
+	i = 0;
+	while (i < row)
+	{
+		ft_printf("%s\n", (*map)[i]);
+		i++;
+	}
 }
 
-void	mem_free(char ***map, int line_count)
+void	cleanup_enemy_array(t_game *game)
+{
+	if (game->enemies)
+	{
+		free(game->enemies);
+		game->enemies = NULL;
+	}
+}
+
+void	mem_free(char ***map, int line_count, t_game *game)
 {
 	int	i;
 
@@ -56,6 +72,7 @@ void	mem_free(char ***map, int line_count)
 	while (i < line_count)
 		free((*map)[i++]);
 	free(*map);
+	cleanup_enemy_array(game);
 }
 
 int	map_mem_allocate(char ***map, int fd, int line_count, int max_line_length)

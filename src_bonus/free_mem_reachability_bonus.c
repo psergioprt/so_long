@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/so_long.h"
+#include "../include_bonus/so_long_bonus.h"
 
 void	flood_fill(t_flood_fill_vars *vars, int x, int y)
 {
@@ -64,29 +64,44 @@ void	free_flood_mem(t_game *game, t_flood_fill_vars *f, int *flag)
 			}
 			free(game->map);
 			game->map = NULL;
+			cleanup_enemy_array(game);
 		}
 		exit(1);
 	}
 }
 
-void	check_map_not_null(t_game *game)
+/*void	free_flood_mem(t_game *game, t_flood_fill_vars *f, int *flag)
 {
-	int	min_rows;
-	int	min_columns;
+	int	i;
 
-	min_rows = 4;
-	min_columns = 4;
-	if (!game->map)
+	if (*flag == 1)
 	{
-		ft_printf("Error\nMap is NULL\n");
-		mem_free(&game->map, game->line_count);
+		i = 0;
+		while (i < f->rows)
+			free(f->visited[i++]);
+		free(f->visited);
+		i = 0;
+		while (i < f->rows)
+			free(game->map[i++]);
+		free(game->map);
+		cleanup_enemy_array(game);
 		exit(1);
 	}
-	if (game->line_count < min_rows || game->max_line_length < min_columns)
+	else if (*flag == 0)
 	{
-		ft_printf("Error\nEither map is empty ");
-		ft_printf("or dimensions are too small!\n");
-		mem_free(&game->map, game->line_count);
-		exit(1);
+		i = 0;
+		while (i < f->rows)
+			free(f->visited[i++]);
+		free(f->visited);
+	}
+}*/
+
+void	check_enemies_alloc(t_game *game)
+{
+	if (!game->enemies)
+	{
+		ft_printf("Error\nMemory allocation for enemies failed\n");
+		mem_free(&game->map, game->line_count, game);
+		exit (1);
 	}
 }

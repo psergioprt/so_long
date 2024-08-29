@@ -50,3 +50,15 @@ Initialy to force enemy to be inside map boundaries i ckecked it. But to reduce 
  63                 pos++; 
  64         } 
  65 }
+
+
+What I have changed on August 29th 2024
+Due to issues on defining player position the following function were changed at the mandatory part
+Bonus must be updated:
+- static void init_visited;
+- define player_position;
+- validate_reachability;
+- free_flood_mem
+- check_player_trapped
+- free_flood_mem
+- map_mem_allocate

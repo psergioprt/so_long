@@ -157,8 +157,8 @@ So_long function explained
                       Pixel to be retrieved is at the tile 1st row and at the 6th column
 	  Now that we have the exact location of the pixel tile data to retrive and the exact location of the pixel to copy that information to, it's time to copy that information to the destiny as follows:
           *(int *)(game->buffer_data + buffer_pos) = *(int *)(tile_data + tile_pos);
-         
-       ->Now, the next function loop_look will load is 'move_enemies' (handle_enemy_funcs.c).
+
+       ->Now, the next function loop_hook will load is 'move_enemies' (handle_enemy_funcs.c).
            This function uses time function clock() and constant CLOCKS_PER_SEC from time.h and rand() from stdlib.h header files.
              - clock() - This function returns the current processor time used by the program in clock ticks. It is used to measure intervals.
              - CLOCKS_PER_SEC - This constant defines the number of clock ticks per second and is used to convert the clock ticks returned by clock() into seconds.
@@ -179,11 +179,15 @@ So_long function explained
                Basically this function begins an if clause that tells enemies to move towards a direction from four possible directions (rand() % 4) if the speed (default value is one, which means for each
                 movement enemy moves one tile) does not move towards wall or number random generator is not 0 (rand() % 5) which has 20% hipotesis the number generated is 0.
                If enemies do start moving, the number generated from the rand() % 4, if it is '0' it moves UP, '1' moves DOWN, '2' moves left and '3' moves right.
-          
-
-
-
-
-
-                    
-
+               At the end, enemies positions in the enemy structure, are updated with the local variable new positions that were defined in the previous if clauses.
+       ->The next function that loop_hook loads will be display_move_count, display_items_collected and display_player_lives (window_put_image_and_text.c).
+           The three functions are similar, its purpuse is to display text information on the display (window), it differs in content. One is a movement counter, other are collectibles and the last displays life.
+           - display_move_count starts with creating a variable rectangle from t_draw_shape type for drawing shapes for background, that will have sub_variables color, width and height.
+             It is created a string that will hold the game->move_count variable value, converted to string using ft_itoa function. Variables x and y will handle shape and text position at the display, text and 
+              rectangle colors are defined and rectangle size is also defined.
+             draw_rectangle function is called, fetching game data, rectangle variables are called, and the top-left corner location based on the x and y variables is defined.
+             That function calls MLX function mlx_pixel_put, and in a loop creates a rectangle with defined size as follows:
+             Starting x pixel location: 30 - 5 = 25, rectangle width = 80, so the last x pixel is at 105 position.
+             Starting y pixel location: 20 - 15 = 5, rectangle height = 20, so the last y pixel is at 25 position.
+             After the rectangle is time to put the string at the display inside the rectangle. It uses MLX function mlx_string_put. It will put at the window text at the defined x, y position, 
+             the text color and the text string.

@@ -34,7 +34,7 @@ bonus: $(OBJ) $(OBJ_BONUS)
 	$(AR) $(ARFLAGS) $(NAME) $(OBJ) $(OBJ_BONUS)
 
 %.o: %.c
-	@echo "$(COLOUR_BLUE)=>Compiling Push_swap...$(COLOUR_RESET)"
+	@echo "$(COLOUR_BLUE)=>Compiling G.N.L....$(COLOUR_RESET)"
 	$(CC) $(CFLAGS) -o $@ -c $<
 
 clean:

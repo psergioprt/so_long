@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/so_long.h"
+#include "../include_bonus/so_long_bonus.h"
 
 int	handle_items_and_exit(t_game *game)
 {
@@ -18,14 +18,21 @@ int	handle_items_and_exit(t_game *game)
 
 	cur_element = game->map[game->new_y][game->new_x];
 	if (cur_element == 'C')
+	{
 		game->items_collected++;
+		ft_printf("You have now %d items\n", game->items_collected);
+	}
 	if (cur_element == 'E')
 	{
 		if (game->items_collected == game->total_items)
 		{
+			ft_printf("Well done, you have completed the map\n");
 			close_window(game);
 			return (0);
 		}
+		else
+			ft_printf("Not all items collected. %d to exit!\n", \
+			game->total_items - game->items_collected);
 	}
 	game->move_count++;
 	ft_printf("Move count %d\n", game->move_count);
@@ -53,6 +60,7 @@ int	update_map_moves(int keycode, t_game *game)
 			prev_element = '0';
 		else
 			prev_element = cur_element;
+		check_player_lives(game);
 	}
 	return (0);
 }
@@ -71,7 +79,24 @@ static void	render_game_support_lines(t_game *game, int x, int y)
 	else if (tile == 'E')
 		draw_tile_to_buffer(game, game->img_exit, x, y);
 	else if (tile == 'C')
-		draw_tile_to_buffer(game, game->img_item, x, y);
+		draw_tile_to_buffer(game, game->img_item[game->current_frame], x, y);
+}
+
+static void	render_enemy(t_game *game)
+{
+	int	i;
+
+	i = 0;
+	while (i < game->num_enemies)
+	{
+		if (game->img_enemy)
+			draw_tile_to_buffer(game, game->img_enemy, \
+					game->enemies[i].enemy_x, \
+					game->enemies[i].enemy_y);
+		else
+			ft_printf("Error\nEnemy image not loaded\n");
+		i++;
+	}
 }
 
 void	render_game(t_game *game)
@@ -93,5 +118,6 @@ void	render_game(t_game *game)
 		}
 		y++;
 	}
+	render_enemy(game);
 	mlx_put_image_to_window(game->mlx, game->window, game->buffer, 0, 0);
 }

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/so_long.h"
+#include "../include_bonus/so_long_bonus.h"
 
 void	start_mlx_functions(t_game *game)
 {
@@ -28,7 +28,8 @@ int	start_validations(t_game *game)
 {
 	if (!validate_map(game->map, game->line_count, game))
 	{
-		mem_free(&game->map, game->line_count);
+		mem_free(&game->map, game->line_count, game);
+		cleanup_enemy_array(game);
 		return (1);
 	}
 	validate_reachability(game);
@@ -75,7 +76,7 @@ int	main(int argc, char *argv[])
 	fd = open(argv[1], O_RDONLY);
 	start_map_mem_allocate(&game, fd);
 	add_print_lines(&game.map, fd);
-	check_map_not_null(&game);
+	init_handle_enemy_vars(&game);
 	if (start_validations(&game) != 0)
 		return (1);
 	start_mlx_functions(&game);

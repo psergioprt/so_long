@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/so_long.h"
+#include "../include_bonus/so_long_bonus.h"
 
 void	init_game_player_images(t_game *game)
 {
@@ -60,6 +60,11 @@ void	free_game_resources(t_game *game)
 		free(game->map);
 		game->map = NULL;
 	}
+	if (game->enemies != NULL)
+	{
+		free(game->enemies);
+		game->enemies = NULL;
+	}
 }
 
 void	cleanup_mlx(t_game *game)
@@ -70,12 +75,13 @@ void	cleanup_mlx(t_game *game)
 		mlx_destroy_image(game->mlx, game->img_player);
 	if (game->img_wall)
 		mlx_destroy_image(game->mlx, game->img_wall);
-	if (game->img_item)
-		mlx_destroy_image(game->mlx, game->img_item);
+	cleanup_mlx_items(game);
 	if (game->img_exit)
 		mlx_destroy_image(game->mlx, game->img_exit);
 	if (game->img_road)
 		mlx_destroy_image(game->mlx, game->img_road);
+	if (game->img_enemy)
+		mlx_destroy_image(game->mlx, game->img_enemy);
 	if (game->window)
 		mlx_destroy_window(game->mlx, game->window);
 	if (game->mlx)
