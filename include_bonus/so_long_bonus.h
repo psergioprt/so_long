@@ -23,7 +23,7 @@
 # include "mlx.h"
 # include <time.h>
 
-# define TILE_SIZE 64 
+# define TILE_SIZE 32 
 # define ESC 65307
 # define UP_ARROW 65362
 # define DOWN_ARROW 65364
@@ -43,9 +43,22 @@
 #  define IMG_PLAYER_DOWN "./images/img_player_down_32.xpm"
 #  define WALL "./images/wall_32.xpm"
 #  define ROAD "./images/road_32.xpm"
-#  define ITEM "./images/item_32.xpm"
 #  define ENEMY "./images/enemy_32.xpm"
 #  define EXIT "./images/exit_32.xpm"
+#  define ITEM1 "./images/item_rot_1a_32.xpm"
+#  define ITEM2 "./images/item_rot_1b_32.xpm"
+#  define ITEM3 "./images/item_rot_1c_32.xpm"
+#  define ITEM4 "./images/item_rot_1d_32.xpm"
+#  define ITEM5 "./images/item_rot_1e_32.xpm"
+#  define ITEM6 "./images/item_rot_2a_32.xpm"
+#  define ITEM7 "./images/item_rot_2b_32.xpm"
+#  define ITEM8 "./images/item_rot_2c_32.xpm"
+#  define ITEM9 "./images/item_rot_3a_32.xpm"
+#  define ITEM10 "./images/item_rot_3b_32.xpm"
+#  define ITEM11 "./images/item_rot_3c_32.xpm"
+#  define ITEM12 "./images/item_rot_4a_32.xpm"
+#  define ITEM13 "./images/item_rot_4b_32.xpm"
+#  define ITEM14 "./images/item_rot_4c_32.xpm"
 # elif TILE_SIZE == 48
 #  define IMG_PLAYER_LEFT "./images/img_player_left_48.xpm"
 #  define IMG_PLAYER_RIGHT "./images/img_player_right_48.xpm"
@@ -53,9 +66,22 @@
 #  define IMG_PLAYER_DOWN "./images/img_player_down_48.xpm"
 #  define WALL "./images/wall_48.xpm"
 #  define ROAD "./images/road_48.xpm"
-#  define ITEM "./images/item_48.xpm"
 #  define ENEMY "./images/enemy_48.xpm"
 #  define EXIT "./images/exit_48.xpm"
+#  define ITEM1 "./images/item_rot_1a_48.xpm"
+#  define ITEM2 "./images/item_rot_1b_48.xpm"
+#  define ITEM3 "./images/item_rot_1c_48.xpm"
+#  define ITEM4 "./images/item_rot_1d_48.xpm"
+#  define ITEM5 "./images/item_rot_1e_48.xpm"
+#  define ITEM6 "./images/item_rot_2a_48.xpm"
+#  define ITEM7 "./images/item_rot_2b_48.xpm"
+#  define ITEM8 "./images/item_rot_2c_48.xpm"
+#  define ITEM9 "./images/item_rot_3a_48.xpm"
+#  define ITEM10 "./images/item_rot_3b_48.xpm"
+#  define ITEM11 "./images/item_rot_3c_48.xpm"
+#  define ITEM12 "./images/item_rot_4a_48.xpm"
+#  define ITEM13 "./images/item_rot_4b_48.xpm"
+#  define ITEM14 "./images/item_rot_4c_48.xpm"
 # elif TILE_SIZE == 64
 #  define IMG_PLAYER_LEFT "./images/img_player_left_64.xpm"
 #  define IMG_PLAYER_RIGHT "./images/img_player_right_64.xpm"
