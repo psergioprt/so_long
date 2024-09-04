@@ -1,5 +1,5 @@
 # Variable definition
-CC = gcc
+CC = cc
 
    # Include MLX and X11 header files. Look at the correct folder
    # whether the system is Linux or MacOS
@@ -78,12 +78,12 @@ $(BONUS_NAME): $(BONUS_OBJS) $(LIBFT) $(PRINTF) $(GNL) $(MLX)
 $(OBJDIR)/%.o: $(SRCDIR)/%.c $(wildcard $(INCDIR)/*.h)
 	@echo "$(COLOUR_BLUE)=>Compiling so_long...$(COLOUR_RESET)"
 	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) -c $< -o $@ -lm
+	$(CC) $(CFLAGS) -c $< -o $@
 
 $(BONUS_OBJDIR)/%.o: $(BONUS_SRCDIR)/%.c $(wildcard $(BONUS_INCDIR)/*.h)
 	@echo "$(COLOUR_BLUE)=>Compiling so_long...$(COLOUR_RESET)"
 	@mkdir -p $(dir $@)
-	$(CC) $(BONUS_CFLAGS) -c $< -o $@ -lm
+	$(CC) $(BONUS_CFLAGS) -c $< -o $@
 
 
 # To ensure GNL library is built by invoking make if GNLDIR

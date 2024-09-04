@@ -23,7 +23,7 @@
 # include "mlx.h"
 # include <time.h>
 
-# define TILE_SIZE 32 
+# define TILE_SIZE 48 
 # define ESC 65307
 # define UP_ARROW 65362
 # define DOWN_ARROW 65364
