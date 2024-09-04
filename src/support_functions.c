@@ -15,7 +15,7 @@
 void	map_read(int fd, int *line_count, int *max_line_length)
 {
 	char	*line;
-	char	line_length;
+	int	line_length;
 
 	line = get_next_line(fd);
 	while (line != NULL)
