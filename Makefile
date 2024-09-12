@@ -1,5 +1,5 @@
 # Variable definition
-CC = cc
+CC = gcc
 
    # Include MLX and X11 header files. Look at the correct folder
    # whether the system is Linux or MacOS
@@ -66,11 +66,11 @@ BONUS_OBJS = $(patsubst $(BONUS_SRCDIR)/%.c, $(BONUS_OBJDIR)/%.o, $(BONUS))
 # and produces push_swap executable
 $(NAME): $(OBJS) $(LIBFT) $(PRINTF) $(GNL) $(MLX)
 	@echo "$(COLOUR_GREEN)=>Linking objects...$(COLOUR_RESET)"
-	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS) -lm
+	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 
 $(BONUS_NAME): $(BONUS_OBJS) $(LIBFT) $(PRINTF) $(GNL) $(MLX)
 	@echo "$(COLOUR_GREEN)=>Linking objects...$(COLOUR_RESET)"
-	$(CC) $(BONUS_CFLAGS) -o $@ $^ $(LDFLAGS) -lm
+	$(CC) $(BONUS_CFLAGS) -o $@ $^ $(LDFLAGS)
 
 
 # Generate object files from source files.

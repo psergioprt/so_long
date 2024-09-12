@@ -1,9 +1,0 @@
-So_long is a 42 project where a game must be built in C language, using MLX Graphics library. As every 42 project we must accomplish this project, based on the school norms and requirements.
-I had the chance to deepen my C language knowledge, and so far it was the project i liked the most to work on.
-It is a simple game, where a map must be read, with the required elements, such as the wall, the path way, collectables, a player and an exit. The bonus part would include "enemies" aswell. Player cannot meet
-enemy, otherwise player will loose life. Player starts with 100% life, and after each player/enemy encounter, player looses 10% of life. If player life reaches 0, the game will end and exit.
-About the textures, i added the particularity of the collectable be a 5 escudos coin, which was one of the coins Euro precedents. As my 5 year-old son is a Buzz Lighteer fan, i decided to have Buzz personage as
-the player and Zurg as the Enemies.
-This game can be configured to automatically read 32, 48 and 64 images. The bigger, the higher resolution.
-On screen player movements counter, number of collectables to be collected and player life can be visualized.
-Player can only leave game when there are no items left to collect.  

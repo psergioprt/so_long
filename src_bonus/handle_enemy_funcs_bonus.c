@@ -41,7 +41,7 @@ void	init_handle_enemy_vars(t_game *game)
 
 	i = 0;
 	check_map_dimensions_enemies(game);
-	game->num_enemies = 7;
+	game->num_enemies = 3;
 	game->enemies = malloc(sizeof(t_enemy) * game->num_enemies);
 	check_enemies_alloc(game);
 	while (i < game->num_enemies)
@@ -125,7 +125,7 @@ void	check_player_lives(t_game *game)
 		if (game->player_x == game->enemies[i].enemy_x && \
 			game->player_y == game->enemies[i].enemy_y)
 		{
-			game->lives -= 10;
+			game->lives -= 20;
 			ft_printf("You lost life, you have %d life left\n", game->lives);
 			if (game->lives <= 0)
 			{
