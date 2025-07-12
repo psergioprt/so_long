@@ -4,7 +4,7 @@
 
 ![Screenshot from 2024-08-27 00-45-59](https://github.com/user-attachments/assets/87cffe26-f7c4-4824-907e-5723c4d4fb73)
 
-[Watch demo on LinkedIn](https://www.linkedin.com/posts/your-profile/video-id)
+[Watch demo on LinkedIn](https://www.linkedin.com/feed/update/urn:li:activity:7240033939510226944/?originTrackingId=yuixhOqMSwar%2FIK1B635jA%3D%3D)
 
 #### Game Overview
 
