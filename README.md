@@ -4,6 +4,8 @@
 
 ![Screenshot from 2024-08-27 00-45-59](https://github.com/user-attachments/assets/87cffe26-f7c4-4824-907e-5723c4d4fb73)
 
+[Watch demo on LinkedIn](https://www.linkedin.com/posts/your-profile/video-id)
+
 #### Game Overview
 
 ##### The game features a simple yet engaging concept. The player must navigate through a map that includes essential elements such as walls, pathways, collectables, a player character, and an exit. The objective is to collect all items and reach the exit without losing all of your life points.
